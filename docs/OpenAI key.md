@@ -1,0 +1,2 @@
+OPENAI\_API\_KEY  
+	sk-proj-EF8giePa9dX-m-IkH6gPmIT25seEhBY8Vspp5DtXROYSrMBM1EV3uwNBVpmb84e5JDra2av9ncT3BlbkFJNnRlxleZ251FPwCyDFe\_gOkdDmaoRfHt6MCDgW6RFajUJCiznhuo\_KzNjVWG8gr1\_nAwSoPqEA

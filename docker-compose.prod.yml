@@ -1,0 +1,169 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+      target: production
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    env_file:
+      - .env.production
+    volumes:
+      - ./logs:/app/logs
+      - secure_uploads:/secure/uploads
+      - secure_backups:/secure/backups
+    depends_on:
+      - db
+      - redis
+    networks:
+      - app-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/tmp
+    user: "1001:1001"
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-upsell_agent_prod}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+    networks:
+      - app-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    security_opt:
+      - no-new-privileges:true
+    user: "999:999"
+    command: >
+      postgres 
+      -c ssl=on 
+      -c ssl_cert_file=/etc/ssl/certs/server.crt
+      -c ssl_key_file=/etc/ssl/private/server.key
+      -c log_connections=on
+      -c log_disconnections=on
+      -c log_statement=all
+      -c max_connections=100
+      -c shared_preload_libraries=pg_stat_statements
+
+  redis:
+    image: redis:7-alpine
+    command: >
+      redis-server 
+      --requirepass ${REDIS_PASSWORD}
+      --appendonly yes
+      --maxmemory 256mb
+      --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    networks:
+      - app-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    security_opt:
+      - no-new-privileges:true
+    user: "999:999"
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/prod.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl/cert.pem:/etc/ssl/certs/cert.pem:ro
+      - ./ssl/key.pem:/etc/ssl/private/key.pem:ro
+      - ./ssl/dhparam.pem:/etc/ssl/certs/dhparam.pem:ro
+    depends_on:
+      - app
+    networks:
+      - app-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "nginx", "-t"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    security_opt:
+      - no-new-privileges:true
+
+  backup:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-upsell_agent_prod}
+    volumes:
+      - secure_backups:/backups
+      - ./scripts/backup.sh:/backup.sh:ro
+    networks:
+      - app-network
+    depends_on:
+      - db
+    command: >
+      sh -c "
+        chmod +x /backup.sh &&
+        echo '0 2 * * * /backup.sh' | crontab - &&
+        crond -f
+      "
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  postgres_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /secure/postgres_data
+  redis_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /secure/redis_data
+  secure_uploads:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /secure/uploads
+  secure_backups:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /secure/backups
+
+networks:
+  app-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

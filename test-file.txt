@@ -1,0 +1,7 @@
+This is a test product specification file.
+
+Product: Hydrating Face Serum
+Description: A powerful anti-aging serum with hyaluronic acid
+Price: $45.00
+Category: Skincare
+Benefits: Reduces fine lines, hydrates skin, improves texture

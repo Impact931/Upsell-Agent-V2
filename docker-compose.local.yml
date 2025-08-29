@@ -1,0 +1,92 @@
+version: '3.8'
+
+services:
+  # Upsell Agent Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: upsell_agent_app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://upsell_user:upsell_password@postgres:5432/upsell_agent_dev
+      - JWT_SECRET=development-jwt-secret-change-in-production
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_MODEL=gpt-4-turbo-preview
+      - NEXT_PUBLIC_APP_URL=http://localhost:3000
+      - LOG_LEVEL=debug
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+      - uploads:/tmp/uploads
+      - logs:/app/logs
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # PostgreSQL Database for Upsell Agent
+  postgres:
+    image: postgres:15-alpine
+    container_name: upsell_agent_postgres
+    environment:
+      POSTGRES_DB: upsell_agent_dev
+      POSTGRES_USER: upsell_user
+      POSTGRES_PASSWORD: upsell_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U upsell_user -d upsell_agent_dev"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # Redis Cache (for future session storage and caching)
+  redis:
+    image: redis:7-alpine
+    container_name: upsell_agent_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+  # Database Management Tool
+  adminer:
+    image: adminer:latest
+    container_name: upsell_agent_adminer
+    ports:
+      - "8080:8080"
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres
+      ADMINER_DESIGN: dracula
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    profiles: ["tools"]
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  uploads:
+    driver: local
+  logs:
+    driver: local
+
+networks:
+  default:
+    name: upsell_agent_network
