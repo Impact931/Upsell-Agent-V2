@@ -155,9 +155,16 @@ async function processHandler(request: NextRequest) {
     );
 
     // Generate training materials with ICP context
+    const parsedICPs = savedICPs.map(icp => ({
+      ...icp,
+      demographics: typeof icp.demographics === 'string' ? JSON.parse(icp.demographics) : icp.demographics,
+      painPoints: typeof icp.painPoints === 'string' ? JSON.parse(icp.painPoints) : icp.painPoints,
+      motivations: typeof icp.motivations === 'string' ? JSON.parse(icp.motivations) : icp.motivations,
+    }));
+    
     const trainingMaterials = await openaiService.generateAllTrainingMaterials({
       ...generationContext,
-      idealClientProfiles: savedICPs,
+      idealClientProfiles: parsedICPs,
     });
 
     // Save training materials to database
