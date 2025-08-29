@@ -162,61 +162,63 @@ export default function RegisterPage() {
                   Your Role
                 </label>
                 <div className="grid grid-cols-2 gap-4">
-                  <label className={`
-                    flex items-center justify-center p-4 border-2 rounded-lg cursor-pointer transition-all
-                    ${watchedRole === 'manager' 
-                      ? 'border-teal-500 bg-teal-50' 
-                      : 'border-gray-300 hover:border-gray-400'
-                    }
-                  `} style={{
-                    borderColor: watchedRole === 'manager' ? 'var(--primary-teal)' : 'var(--neutral-300)',
-                    backgroundColor: watchedRole === 'manager' ? 'var(--primary-teal-pale)' : 'transparent'
-                  }}>
+                  <div>
                     <input
                       {...register('role')}
                       type="radio"
                       value="manager"
-                      className="sr-only"
+                      id="role-manager"
+                      className="peer hidden"
                       disabled={isLoading || isSubmitting}
                     />
-                    <div className="text-center">
-                      <Building className="w-6 h-6 mx-auto mb-2" style={{ 
-                        color: watchedRole === 'manager' ? 'var(--primary-teal)' : 'var(--neutral-600)'
-                      }} />
-                      <div className="font-medium">Manager</div>
-                      <div className="text-xs" style={{ color: 'var(--neutral-600)' }}>
-                        Upload materials, manage team
+                    <label 
+                      htmlFor="role-manager"
+                      className="flex items-center justify-center p-4 border-2 rounded-lg cursor-pointer transition-all peer-checked:border-teal-500 peer-checked:bg-teal-50 border-gray-300 hover:border-gray-400"
+                      style={{
+                        borderColor: watchedRole === 'manager' ? 'var(--primary-teal)' : 'var(--neutral-300)',
+                        backgroundColor: watchedRole === 'manager' ? 'var(--primary-teal-pale)' : 'transparent'
+                      }}
+                    >
+                      <div className="text-center">
+                        <Building className="w-6 h-6 mx-auto mb-2" style={{ 
+                          color: watchedRole === 'manager' ? 'var(--primary-teal)' : 'var(--neutral-600)'
+                        }} />
+                        <div className="font-medium">Manager</div>
+                        <div className="text-xs" style={{ color: 'var(--neutral-600)' }}>
+                          Upload materials, manage team
+                        </div>
                       </div>
-                    </div>
-                  </label>
+                    </label>
+                  </div>
 
-                  <label className={`
-                    flex items-center justify-center p-4 border-2 rounded-lg cursor-pointer transition-all
-                    ${watchedRole === 'staff' 
-                      ? 'border-teal-500 bg-teal-50' 
-                      : 'border-gray-300 hover:border-gray-400'
-                    }
-                  `} style={{
-                    borderColor: watchedRole === 'staff' ? 'var(--primary-teal)' : 'var(--neutral-300)',
-                    backgroundColor: watchedRole === 'staff' ? 'var(--primary-teal-pale)' : 'transparent'
-                  }}>
+                  <div>
                     <input
                       {...register('role')}
                       type="radio"
                       value="staff"
-                      className="sr-only"
+                      id="role-staff"
+                      className="peer hidden"
                       disabled={isLoading || isSubmitting}
                     />
-                    <div className="text-center">
-                      <Users className="w-6 h-6 mx-auto mb-2" style={{ 
-                        color: watchedRole === 'staff' ? 'var(--primary-teal)' : 'var(--neutral-600)'
-                      }} />
-                      <div className="font-medium">Staff Member</div>
-                      <div className="text-xs" style={{ color: 'var(--neutral-600)' }}>
-                        Access training materials
+                    <label 
+                      htmlFor="role-staff"
+                      className="flex items-center justify-center p-4 border-2 rounded-lg cursor-pointer transition-all peer-checked:border-teal-500 peer-checked:bg-teal-50 border-gray-300 hover:border-gray-400"
+                      style={{
+                        borderColor: watchedRole === 'staff' ? 'var(--primary-teal)' : 'var(--neutral-300)',
+                        backgroundColor: watchedRole === 'staff' ? 'var(--primary-teal-pale)' : 'transparent'
+                      }}
+                    >
+                      <div className="text-center">
+                        <Users className="w-6 h-6 mx-auto mb-2" style={{ 
+                          color: watchedRole === 'staff' ? 'var(--primary-teal)' : 'var(--neutral-600)'
+                        }} />
+                        <div className="font-medium">Staff Member</div>
+                        <div className="text-xs" style={{ color: 'var(--neutral-600)' }}>
+                          Access training materials
+                        </div>
                       </div>
-                    </div>
-                  </label>
+                    </label>
+                  </div>
                 </div>
                 {errors.role && (
                   <p className="form-error">{errors.role.message}</p>
