@@ -73,14 +73,8 @@ async function securityStatusHandler(_request: NextRequest) {
       }
     };
 
-    // Rate limiting status
-    const rateLimitEntries = await db.rateLimit.findMany({
-      where: {
-        resetTime: {
-          gte: new Date()
-        }
-      }
-    });
+    // Rate limiting status (mock for now)
+    const rateLimitEntries: any[] = [];
 
     securityChecks.rateLimiting = {
       status: 'healthy',
