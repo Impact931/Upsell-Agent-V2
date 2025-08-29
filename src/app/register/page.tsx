@@ -77,21 +77,19 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex">
-      {/* Left side - Registration form */}
-      <div className="flex-1 flex flex-col justify-center px-4 sm:px-6 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="text-center">
-            <h1 className="heading-2 text-center mb-2">
-              Create your account
-            </h1>
-            <p className="body-base text-center mb-8" style={{ color: 'var(--neutral-600)' }}>
-              Start generating AI-powered training materials today
-            </p>
-          </div>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8">
+        <div className="text-center">
+          <h1 className="heading-2 text-center mb-2">
+            Create your account
+          </h1>
+          <p className="body-base text-center mb-8" style={{ color: 'var(--neutral-600)' }}>
+            Start generating AI-powered training materials today
+          </p>
+        </div>
 
-          <div className="bg-white py-8 px-4 shadow-lg rounded-lg sm:px-10" style={{ boxShadow: 'var(--shadow-lg)' }}>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <div className="bg-white py-8 px-8 shadow-lg rounded-lg" style={{ boxShadow: 'var(--shadow-lg)' }}>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               {/* Email */}
               <div className="form-group">
                 <label htmlFor="email" className="form-label form-label--required">
@@ -348,78 +346,25 @@ export default function RegisterPage() {
               </button>
             </form>
 
+          <div className="mt-6">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t" style={{ borderColor: 'var(--neutral-300)' }} />
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white body-small" style={{ color: 'var(--neutral-500)' }}>
+                  Already have an account?
+                </span>
+              </div>
+            </div>
+
             <div className="mt-6">
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t" style={{ borderColor: 'var(--neutral-300)' }} />
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white body-small" style={{ color: 'var(--neutral-500)' }}>
-                    Already have an account?
-                  </span>
-                </div>
-              </div>
-
-              <div className="mt-6">
-                <Link
-                  href="/login"
-                  className="btn btn--secondary w-full"
-                >
-                  Sign in instead
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Right side - Marketing content */}
-      <div 
-        className="hidden lg:block relative w-0 flex-1"
-        style={{ backgroundColor: 'var(--secondary-sage-pale)' }}
-      >
-        <div className="absolute inset-0 flex items-center justify-center p-12">
-          <div className="max-w-md text-center">
-            <div 
-              className="w-16 h-16 mx-auto mb-8 rounded-full flex items-center justify-center"
-              style={{ backgroundColor: 'var(--secondary-sage)' }}
-            >
-              <UserPlus className="w-8 h-8" style={{ color: 'var(--white)' }} />
-            </div>
-            <h2 className="heading-3 mb-4" style={{ color: 'var(--neutral-900)' }}>
-              Join the Future of Sales Training
-            </h2>
-            <p className="body-base mb-8" style={{ color: 'var(--neutral-700)' }}>
-              Trusted by {watchedBusinessType === 'spa' ? 'spas' : watchedBusinessType === 'salon' ? 'salons' : 'wellness centers'} nationwide to transform their sales performance with AI-powered training.
-            </p>
-            <div className="space-y-4 text-left">
-              <div className="flex items-center">
-                <div 
-                  className="w-2 h-2 rounded-full mr-3"
-                  style={{ backgroundColor: 'var(--success)' }}
-                />
-                <span className="body-small" style={{ color: 'var(--neutral-700)' }}>
-                  Free 14-day trial with full access
-                </span>
-              </div>
-              <div className="flex items-center">
-                <div 
-                  className="w-2 h-2 rounded-full mr-3"
-                  style={{ backgroundColor: 'var(--success)' }}
-                />
-                <span className="body-small" style={{ color: 'var(--neutral-700)' }}>
-                  No credit card required to start
-                </span>
-              </div>
-              <div className="flex items-center">
-                <div 
-                  className="w-2 h-2 rounded-full mr-3"
-                  style={{ backgroundColor: 'var(--success)' }}
-                />
-                <span className="body-small" style={{ color: 'var(--neutral-700)' }}>
-                  Cancel anytime, keep your data
-                </span>
-              </div>
+              <Link
+                href="/login"
+                className="btn btn--secondary w-full"
+              >
+                Sign in instead
+              </Link>
             </div>
           </div>
         </div>
