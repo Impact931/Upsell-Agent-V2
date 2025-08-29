@@ -86,7 +86,6 @@
 }
 
 /* Base Styles */
-@layer base {
   * {
     border-color: var(--neutral-300);
   }
@@ -179,10 +178,8 @@
     white-space: nowrap;
     border: 0;
   }
-}
 
 /* Component Styles */
-@layer components {
   /* Button Base */
   .btn {
     display: inline-flex;
@@ -558,7 +555,6 @@
       padding-right: var(--space-4);
     }
   }
-}
 
 /* Animations */
 @keyframes fadeIn {
