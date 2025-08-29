@@ -160,6 +160,7 @@ async function processHandler(request: NextRequest) {
       demographics: typeof icp.demographics === 'string' ? JSON.parse(icp.demographics) : icp.demographics,
       painPoints: typeof icp.painPoints === 'string' ? JSON.parse(icp.painPoints) : icp.painPoints,
       motivations: typeof icp.motivations === 'string' ? JSON.parse(icp.motivations) : icp.motivations,
+      preferredTone: (icp.preferredTone as "professional" | "casual" | "consultative") || "professional",
     }));
     
     const trainingMaterials = await openaiService.generateAllTrainingMaterials({
