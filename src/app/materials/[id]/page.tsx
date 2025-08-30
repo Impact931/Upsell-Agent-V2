@@ -593,45 +593,64 @@ export default function MaterialViewerPage() {
               <div className="p-6">
                 {/* ICP Tabs for Scripts */}
                 {material.type === 'script' && material.product?.idealClientProfiles && material.product.idealClientProfiles.length > 0 ? (
-                  <div>
-                    {/* Tab Navigation - Clean numbered tabs */}
-                    <div className="flex gap-2 mb-6 bg-gray-50 p-1 rounded-lg">
+                  <div className="space-y-6">
+                    {/* Tab Navigation - Professional Spa-themed tabs */}
+                    <div className="flex flex-wrap gap-3 p-2 bg-white/70 backdrop-blur-sm rounded-2xl border border-sage-200/40 shadow-spa">
                       {material.product.idealClientProfiles.map((icp, index) => (
                         <button
                           key={icp.id}
                           onClick={() => setActiveICPTab(icp.id)}
-                          className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                          className={`group relative px-6 py-3 text-sm font-semibold rounded-xl transition-all duration-300 transform hover:scale-[1.02] ${
                             activeICPTab === icp.id
-                              ? 'bg-white text-teal-700 shadow-sm'
-                              : 'text-gray-600 hover:text-gray-900'
+                              ? 'bg-gradient-to-br from-sage-400 to-sage-500 text-white shadow-spa-lg'
+                              : 'text-earth-600 hover:text-sage-700 hover:bg-sage-50/80'
                           }`}
                         >
-                          <span className="flex items-center gap-2">
-                            <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+                          <div className="flex items-center gap-3">
+                            <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${
                               activeICPTab === icp.id 
-                                ? 'bg-teal-100 text-teal-700' 
-                                : 'bg-gray-200 text-gray-600'
+                                ? 'bg-white/20 text-white' 
+                                : 'bg-sage-100 text-sage-600 group-hover:bg-sage-200'
                             }`}>
                               {index + 1}
-                            </span>
-                            <span className="hidden sm:inline">{icp.title}</span>
-                          </span>
+                            </div>
+                            <div className="text-left">
+                              <div className="font-semibold">{icp.title}</div>
+                              <div className={`text-xs ${
+                                activeICPTab === icp.id ? 'text-white/80' : 'text-earth-500'
+                              }`}>
+                                Client Profile {index + 1}
+                              </div>
+                            </div>
+                          </div>
                         </button>
                       ))}
                     </div>
 
-                    {/* Tab Content - Just the script content */}
-                    <div className="bg-white rounded-lg border border-gray-200">
+                    {/* Tab Content - Elegant content display */}
+                    <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-sage-100/50 shadow-spa overflow-hidden">
                       {material.product.idealClientProfiles
                         .filter(icp => icp.id === activeICPTab)
                         .map((icp) => (
-                          <div key={icp.id} className="p-6">
+                          <div key={icp.id} className="p-8">
+                            {/* ICP Header */}
+                            <div className="mb-6 pb-4 border-b border-sage-100">
+                              <h3 className="text-xl font-semibold text-earth-800 mb-2">
+                                {icp.title} Training Script
+                              </h3>
+                              <p className="text-earth-600">
+                                Customized wellness consultation approach for this client profile
+                              </p>
+                            </div>
+                            
+                            {/* Script Content */}
                             <div 
-                              className="prose prose-sm max-w-none"
+                              className="prose prose-lg max-w-none spa-content"
                               style={{ 
-                                lineHeight: '1.7',
-                                fontSize: '15px',
-                                color: '#374151'
+                                lineHeight: '1.8',
+                                fontSize: '16px',
+                                color: '#54463a',
+                                fontFamily: 'Inter, system-ui, sans-serif'
                               }}
                               dangerouslySetInnerHTML={{
                                 __html: formatContentWithCSS(getICPSpecificContent(icp, material.content || ''))

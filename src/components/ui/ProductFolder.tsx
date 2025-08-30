@@ -86,10 +86,10 @@ const TYPE_ICONS = {
 };
 
 const TYPE_COLORS = {
-  script: 'var(--primary-teal)',
-  guide: 'var(--secondary-sage)',
-  faq: 'var(--info)',
-  'objection-handling': 'var(--warning)',
+  script: '#9CAF88', // sage-300
+  guide: '#C8A882', // earth secondary  
+  faq: '#7A9266', // sage-400
+  'objection-handling': '#B8A082', // muted gold
 };
 
 export function ProductFolder({ 
@@ -136,26 +136,26 @@ export function ProductFolder({
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'published':
-        return 'text-green-700 bg-green-100';
+        return 'text-sage-700 bg-sage-100';
       case 'draft':
-        return 'text-yellow-700 bg-yellow-100';
+        return 'text-earth-700 bg-earth-100';
       case 'archived':
-        return 'text-gray-700 bg-gray-100';
+        return 'text-gray-600 bg-gray-100';
       default:
-        return 'text-gray-700 bg-gray-100';
+        return 'text-gray-600 bg-gray-100';
     }
   };
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case 'beginner':
-        return 'text-green-700 bg-green-100';
+        return 'text-sage-700 bg-sage-100';
       case 'intermediate':
-        return 'text-yellow-700 bg-yellow-100';
+        return 'text-earth-700 bg-earth-100';
       case 'advanced':
-        return 'text-red-700 bg-red-100';
+        return 'text-accent-coral bg-accent-coral/10';
       default:
-        return 'text-gray-700 bg-gray-100';
+        return 'text-gray-600 bg-gray-100';
     }
   };
 
@@ -164,49 +164,47 @@ export function ProductFolder({
     : null;
 
   return (
-    <Card className="overflow-hidden">
-      <CardContent className="p-0">
+    <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-sage-200/40 shadow-spa hover:shadow-spa-lg transition-all duration-300 overflow-hidden">
+      <div className="p-0">
         {/* Folder Header */}
         <div
-          className="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50 transition-colors"
+          className="flex items-center justify-between p-6 cursor-pointer hover:bg-sage-50/50 transition-all duration-300"
           onClick={handleToggle}
         >
           <div className="flex items-center gap-3 flex-1">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-sage-400 to-sage-500 rounded-xl flex items-center justify-center shadow-spa transition-all duration-300">
+                {expanded ? (
+                  <FolderOpen className="w-5 h-5 text-white" />
+                ) : (
+                  <Folder className="w-5 h-5 text-white" />
+                )}
+              </div>
               {expanded ? (
-                <ChevronDown className="w-5 h-5 text-gray-500" />
+                <ChevronDown className="w-5 h-5 text-sage-500 transition-transform duration-300" />
               ) : (
-                <ChevronRight className="w-5 h-5 text-gray-500" />
-              )}
-              {expanded ? (
-                <FolderOpen className="w-6 h-6" style={{ color: 'var(--primary-teal)' }} />
-              ) : (
-                <Folder className="w-6 h-6" style={{ color: 'var(--primary-teal)' }} />
+                <ChevronRight className="w-5 h-5 text-sage-500 transition-transform duration-300" />
               )}
             </div>
             
             <div className="flex-1">
-              <h3 className="heading-4 mb-1">{product.name}</h3>
-              <div className="flex items-center gap-4 text-sm" style={{ color: 'var(--neutral-600)' }}>
-                <span>{materials.length} material{materials.length !== 1 ? 's' : ''}</span>
-                <span>{product.category}</span>
+              <h3 className="font-display text-xl font-semibold text-earth-800 mb-1">{product.name}</h3>
+              <div className="flex items-center gap-4 text-sm text-earth-600">
+                <span className="bg-sage-50 px-2 py-1 rounded-lg font-medium">
+                  {materials.length} material{materials.length !== 1 ? 's' : ''}
+                </span>
+                <span className="bg-earth-50 px-2 py-1 rounded-lg font-medium">{product.category}</span>
                 {latestMaterial && (
-                  <span>Updated {formatDate(latestMaterial.updatedAt)}</span>
+                  <span className="text-earth-500">Updated {formatDate(latestMaterial.updatedAt)}</span>
                 )}
               </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            <span
-              className="px-2 py-1 rounded-full text-xs font-medium"
-              style={{
-                backgroundColor: 'var(--primary-teal-pale)',
-                color: 'var(--primary-teal-dark)'
-              }}
-            >
+          <div className="flex items-center gap-3">
+            <div className="bg-gradient-to-br from-sage-100 to-sage-200 text-sage-700 px-3 py-2 rounded-xl text-sm font-semibold shadow-spa">
               {materials.length}
-            </span>
+            </div>
             
             {/* Action Menu */}
             {(onArchiveProduct || onDeleteProduct) && (
@@ -216,16 +214,15 @@ export function ProductFolder({
                     e.stopPropagation();
                     setShowActions(!showActions);
                   }}
-                  className="p-1 hover:bg-gray-100 rounded-md transition-colors"
+                  className="p-2 hover:bg-sage-100 rounded-xl transition-all duration-300 transform hover:scale-[1.02]"
                   aria-label="Product actions"
                 >
-                  <MoreHorizontal className="w-4 h-4 text-gray-500" />
+                  <MoreHorizontal className="w-4 h-4 text-sage-500" />
                 </button>
                 
                 {showActions && (
                   <div 
-                    className="absolute right-0 top-full mt-1 w-40 bg-white border border-gray-200 rounded-md shadow-lg z-10"
-                    style={{ boxShadow: 'var(--shadow-md)' }}
+                    className="absolute right-0 top-full mt-2 w-48 bg-white/95 backdrop-blur-sm border border-sage-200/60 rounded-xl shadow-spa-lg z-10"
                   >
                     {onArchiveProduct && (
                       <button
@@ -234,7 +231,7 @@ export function ProductFolder({
                           onArchiveProduct(product.id);
                           setShowActions(false);
                         }}
-                        className="flex items-center gap-2 w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                        className="flex items-center gap-3 w-full px-4 py-3 text-sm text-earth-700 hover:bg-sage-50/80 transition-all duration-300 rounded-lg mx-2 my-1"
                       >
                         <Archive className="w-4 h-4" />
                         Archive Product
@@ -249,7 +246,7 @@ export function ProductFolder({
                             setShowActions(false);
                           }
                         }}
-                        className="flex items-center gap-2 w-full px-3 py-2 text-sm text-red-700 hover:bg-red-50 transition-colors"
+                        className="flex items-center gap-3 w-full px-4 py-3 text-sm text-accent-coral hover:bg-accent-coral/10 transition-all duration-300 rounded-lg mx-2 my-1"
                       >
                         <Trash2 className="w-4 h-4" />
                         Delete Product
@@ -264,14 +261,16 @@ export function ProductFolder({
 
         {/* Folder Contents */}
         {expanded && (
-          <div className="border-t" style={{ borderColor: 'var(--neutral-200)' }}>
-            <div className="p-4 space-y-4">
+          <div className="border-t border-sage-200/40">
+            <div className="p-6 space-y-6">
               {/* Ideal Client Profiles Section */}
               {product.idealClientProfiles && product.idealClientProfiles.length > 0 && (
                 <div className="mb-6">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Users className="w-4 h-4" style={{ color: 'var(--primary-teal)' }} />
-                    <h4 className="font-semibold text-sm" style={{ color: 'var(--neutral-900)' }}>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-8 h-8 bg-gradient-to-br from-sage-400 to-sage-500 rounded-lg flex items-center justify-center">
+                      <Users className="w-4 h-4 text-white" />
+                    </div>
+                    <h4 className="font-display text-lg font-semibold text-earth-800">
                       Ideal Client Profiles ({product.idealClientProfiles.length})
                     </h4>
                   </div>
@@ -279,18 +278,17 @@ export function ProductFolder({
                     {product.idealClientProfiles.map((icp, index) => (
                       <div
                         key={icp.id}
-                        className="p-3 rounded-lg border bg-gradient-to-br from-teal-50 to-blue-50"
-                        style={{ borderColor: 'var(--primary-teal-pale)' }}
+                        className="p-4 rounded-xl border border-sage-200/60 bg-gradient-to-br from-sage-50/80 to-earth-50/60 backdrop-blur-sm shadow-spa hover:shadow-spa-lg transition-all duration-300"
                       >
-                        <div className="flex items-start gap-2 mb-2">
-                          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center">
-                            <span className="text-xs font-bold text-teal-700">{index + 1}</span>
+                        <div className="flex items-start gap-3 mb-3">
+                          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-sage-400 to-sage-500 flex items-center justify-center shadow-spa">
+                            <span className="text-xs font-bold text-white">{index + 1}</span>
                           </div>
                           <div className="flex-1 min-w-0">
-                            <h5 className="font-medium text-sm text-gray-900 truncate">
+                            <h5 className="font-display font-semibold text-sm text-earth-800 truncate">
                               {icp.title}
                             </h5>
-                            <p className="text-xs text-gray-600">
+                            <p className="text-xs text-earth-600">
                               {icp.demographics.ageRange} • {icp.demographics.income}
                             </p>
                           </div>
@@ -298,25 +296,25 @@ export function ProductFolder({
                         <div className="space-y-2">
                           <div className="flex items-start gap-1">
                             <Target className="w-3 h-3 mt-0.5 text-orange-500 flex-shrink-0" />
-                            <div className="text-xs text-gray-600">
-                              <span className="font-medium">Pain Points:</span>
-                              <p className="mt-0.5">{icp.painPoints.slice(0, 2).join(', ')}</p>
+                            <div className="text-xs text-earth-600">
+                              <span className="font-semibold">Pain Points:</span>
+                              <p className="mt-1">{icp.painPoints.slice(0, 2).join(', ')}</p>
                             </div>
                           </div>
                           <div className="flex items-start gap-1">
                             <Heart className="w-3 h-3 mt-0.5 text-green-500 flex-shrink-0" />
-                            <div className="text-xs text-gray-600">
-                              <span className="font-medium">Motivations:</span>
-                              <p className="mt-0.5">{icp.motivations.slice(0, 2).join(', ')}</p>
+                            <div className="text-xs text-earth-600">
+                              <span className="font-semibold">Motivations:</span>
+                              <p className="mt-1">{icp.motivations.slice(0, 2).join(', ')}</p>
                             </div>
                           </div>
-                          <div className="pt-1 border-t border-gray-200">
-                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                          <div className="pt-2 border-t border-sage-200/60">
+                            <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
                               icp.preferredTone === 'professional' 
-                                ? 'bg-blue-100 text-blue-700'
+                                ? 'bg-sage-100 text-sage-700'
                                 : icp.preferredTone === 'casual' 
-                                  ? 'bg-green-100 text-green-700'
-                                  : 'bg-purple-100 text-purple-700'
+                                  ? 'bg-earth-100 text-earth-700'
+                                  : 'bg-accent-mint/20 text-sage-700'
                             }`}>
                               {icp.preferredTone}
                             </span>
@@ -330,9 +328,11 @@ export function ProductFolder({
 
               {/* Training Materials Section */}
               <div>
-                <div className="flex items-center gap-2 mb-3">
-                  <FileText className="w-4 h-4" style={{ color: 'var(--primary-teal)' }} />
-                  <h4 className="font-semibold text-sm" style={{ color: 'var(--neutral-900)' }}>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-8 h-8 bg-gradient-to-br from-earth-400 to-earth-500 rounded-lg flex items-center justify-center">
+                    <FileText className="w-4 h-4 text-white" />
+                  </div>
+                  <h4 className="font-display text-lg font-semibold text-earth-800">
                     Training Materials ({materials.length})
                   </h4>
                 </div>
@@ -343,8 +343,7 @@ export function ProductFolder({
                 return (
                   <div
                     key={material.id}
-                    className="flex items-center justify-between p-3 rounded-lg border hover:bg-gray-50 transition-colors cursor-pointer"
-                    style={{ borderColor: 'var(--neutral-200)' }}
+                    className="flex items-center justify-between p-4 rounded-xl border border-sage-200/60 hover:bg-sage-50/50 transition-all duration-300 cursor-pointer shadow-spa hover:shadow-spa-lg transform hover:scale-[1.01]"
                     onClick={() => onMaterialSelect(material)}
                   >
                     <div className="flex items-start gap-3 flex-1">
@@ -356,17 +355,17 @@ export function ProductFolder({
                       </div>
                       
                       <div className="flex-1">
-                        <div className="flex items-start justify-between mb-1">
-                          <h4 className="font-medium text-sm" style={{ color: 'var(--neutral-900)' }}>
+                        <div className="flex items-start justify-between mb-2">
+                          <h4 className="font-display font-semibold text-sm text-earth-800">
                             {material.title}
                           </h4>
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(material.status)} ml-2 flex-shrink-0`}>
+                          <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(material.status)} ml-3 flex-shrink-0`}>
                             {material.status}
                           </span>
                         </div>
                         
                         {material.description && (
-                          <p className="text-xs mb-2 line-clamp-2" style={{ color: 'var(--neutral-600)' }}>
+                          <p className="text-xs mb-3 line-clamp-2 text-earth-600">
                             {material.description.length > 100 
                               ? material.description.substring(0, 100) + '...'
                               : material.description
@@ -374,40 +373,40 @@ export function ProductFolder({
                           </p>
                         )}
                         
-                        <div className="flex items-center gap-3 text-xs" style={{ color: 'var(--neutral-500)' }}>
+                        <div className="flex items-center gap-3 text-xs text-earth-500">
                           <span 
-                            className="capitalize font-medium"
+                            className="capitalize font-semibold bg-white/70 px-2 py-1 rounded-lg"
                             style={{ color: TYPE_COLORS[material.type] }}
                           >
                             {material.type.replace('-', ' ')}
                           </span>
                           
-                          <span className="flex items-center gap-1">
+                          <span className="flex items-center gap-1 bg-sage-50 px-2 py-1 rounded-lg">
                             <Clock className="w-3 h-3" />
                             {material.duration} min
                           </span>
                           
                           {material.views && (
-                            <span className="flex items-center gap-1">
+                            <span className="flex items-center gap-1 bg-sage-50 px-2 py-1 rounded-lg">
                               <Eye className="w-3 h-3" />
                               {material.views}
                             </span>
                           )}
                           
                           {material.rating && (
-                            <span className="flex items-center gap-1">
-                              <Star className="w-3 h-3 fill-current" style={{ color: 'var(--warning)' }} />
+                            <span className="flex items-center gap-1 bg-sage-50 px-2 py-1 rounded-lg">
+                              <Star className="w-3 h-3 fill-current text-yellow-500" />
                               {material.rating}
                             </span>
                           )}
                           
                           {material.difficulty && (
-                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(material.difficulty)}`}>
+                            <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getDifficultyColor(material.difficulty)}`}>
                               {material.difficulty}
                             </span>
                           )}
                           
-                          <span>{formatDate(material.createdAt)}</span>
+                          <span className="text-earth-400">{formatDate(material.createdAt)}</span>
                         </div>
                       </div>
                     </div>
@@ -417,9 +416,11 @@ export function ProductFolder({
               
                 {materials.length === 0 && (
                   <div className="text-center py-8">
-                    <FileText className="w-8 h-8 mx-auto mb-2" style={{ color: 'var(--neutral-300)' }} />
-                    <p className="text-sm" style={{ color: 'var(--neutral-600)' }}>
-                      No materials in this product folder
+                    <div className="w-12 h-12 bg-sage-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                      <FileText className="w-6 h-6 text-sage-400" />
+                    </div>
+                    <p className="text-sm text-earth-600">
+                      No wellness materials in this product folder
                     </p>
                   </div>
                 )}
@@ -428,7 +429,7 @@ export function ProductFolder({
             </div>
           </div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

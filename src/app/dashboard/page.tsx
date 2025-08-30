@@ -155,10 +155,10 @@ export default function DashboardPage() {
               </div>
               <div>
                 <h1 className="font-display text-3xl font-semibold text-earth-800">
-                  Welcome back, {user?.businessName}
+                  Welcome back, {user?.businessName || 'Business Name'}
                 </h1>
                 <p className="text-lg text-earth-600">
-                  Your wellness management dashboard
+                  Your sales training dashboard
                 </p>
               </div>
             </div>
@@ -172,7 +172,7 @@ export default function DashboardPage() {
             >
               <div className="flex flex-col items-center text-center">
                 <Upload className="w-8 h-8 mb-3 group-hover:scale-110 transition-transform" />
-                <span className="font-semibold text-lg">New Wellness Product</span>
+                <span className="font-semibold text-lg">New Product</span>
                 <span className="text-sm opacity-90 mt-1">Upload & generate materials</span>
               </div>
             </button>
@@ -203,7 +203,7 @@ export default function DashboardPage() {
                 </div>
                 <h3 className="text-2xl font-bold text-earth-800 mb-1">{stats.totalMaterials}</h3>
                 <p className="text-earth-600 font-medium">
-                  Wellness Products
+                  Products
                 </p>
               </div>
 

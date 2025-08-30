@@ -31,13 +31,13 @@ const navigationItems = [
     roles: ['manager', 'staff'],
   },
   {
-    name: 'New Upsell Product',
+    name: 'Products',
     href: '/upload',
     icon: Upload,
     roles: ['manager'],
   },
   {
-    name: 'Training Materials',
+    name: 'Materials',
     href: '/materials',
     icon: FolderOpen,
     roles: ['manager', 'staff'],
@@ -61,8 +61,8 @@ export function Header() {
   const notifications = [
     {
       id: '1',
-      title: 'Training Materials Ready',
-      message: 'Hydrating Face Serum sales materials are now ready for distribution',
+      title: 'Product Materials Ready',
+      message: 'Hydrating Face Serum sales scripts are now ready for distribution',
       type: 'completed',
       timestamp: '2 minutes ago',
       isRead: false
@@ -70,7 +70,7 @@ export function Header() {
     {
       id: '2',
       title: 'Processing Complete',
-      message: 'Massage Package Upsell training materials generated successfully',
+      message: 'Massage Package Upsell materials generated successfully',
       type: 'completed',
       timestamp: '1 hour ago',
       isRead: false
@@ -133,13 +133,13 @@ export function Header() {
             
             <Link href="/dashboard" className="flex items-center ml-2 md:ml-0 group">
               <div className="w-10 h-10 bg-gradient-to-br from-sage-400 to-sage-500 rounded-xl flex items-center justify-center mr-3 shadow-spa group-hover:shadow-spa-lg group-hover:scale-105 transition-all duration-300">
-                <span className="text-white font-bold text-xl font-display">S</span>
+                <span className="text-white font-bold text-xl font-display">U</span>
               </div>
               <div className="hidden sm:block">
                 <div className="font-display text-xl font-semibold text-earth-800 group-hover:text-sage-600 transition-colors">
-                  Serenity Spa
+                  Upsell Agent for {user?.businessName || 'Business Name'}
                 </div>
-                <div className="text-xs text-earth-500 -mt-1">Management Platform</div>
+                <div className="text-xs text-earth-500 -mt-1">Sales Training Platform</div>
               </div>
             </Link>
           </div>
@@ -177,7 +177,7 @@ export function Header() {
                 <input
                   type="search"
                   className="w-64 px-4 py-2 pl-10 pr-4 text-sm border-2 border-sage-200/60 bg-white/70 backdrop-blur-sm rounded-xl focus:ring-2 focus:ring-sage-300/50 focus:border-sage-300 focus:outline-none transition-all duration-300 placeholder:text-earth-400"
-                  placeholder="Search wellness materials..."
+                  placeholder="Search product materials..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   aria-label="Search training materials"

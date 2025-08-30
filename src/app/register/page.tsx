@@ -84,10 +84,10 @@ export default function RegisterPage() {
             <UserPlus className="w-8 h-8 text-white" />
           </div>
           <h1 className="font-display text-3xl font-semibold text-earth-800 mb-3">
-            Welcome to Serenity Spa Management
+            Welcome to Upsell Agent
           </h1>
           <p className="text-lg text-earth-600 mb-8">
-            Create your professional wellness platform account
+            Create your sales training platform account
           </p>
         </div>
 
@@ -104,7 +104,7 @@ export default function RegisterPage() {
                   id="email"
                   autoComplete="email"
                   className={`w-full px-4 py-3 border-2 rounded-xl bg-white/70 backdrop-blur-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage-300/50 focus:border-sage-300 ${errors.email ? 'border-accent-coral bg-red-50/30' : 'border-sage-200 hover:border-sage-300'}`}
-                  placeholder="your.email@spa.com"
+                  placeholder="your.email@business.com"
                   disabled={isLoading || isSubmitting}
                 />
                 {errors.email && (
@@ -118,7 +118,7 @@ export default function RegisterPage() {
               {/* Business Information */}
               <div className="space-y-2">
                 <label htmlFor="businessName" className="block text-sm font-medium text-earth-700">
-                  Spa/Wellness Business Name <span className="text-accent-coral">*</span>
+                  Business Name <span className="text-accent-coral">*</span>
                 </label>
                 <input
                   {...register('businessName')}
@@ -126,7 +126,7 @@ export default function RegisterPage() {
                   id="businessName"
                   autoComplete="organization"
                   className={`w-full px-4 py-3 border-2 rounded-xl bg-white/70 backdrop-blur-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage-300/50 focus:border-sage-300 ${errors.businessName ? 'border-accent-coral bg-red-50/30' : 'border-sage-200 hover:border-sage-300'}`}
-                  placeholder="Serenity Day Spa"
+                  placeholder="Your Business Name"
                   disabled={isLoading || isSubmitting}
                 />
                 {errors.businessName && (
@@ -148,7 +148,7 @@ export default function RegisterPage() {
                     className={`w-full px-4 py-3 border-2 rounded-xl bg-white/70 backdrop-blur-sm appearance-none transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage-300/50 focus:border-sage-300 ${errors.businessType ? 'border-accent-coral bg-red-50/30' : 'border-sage-200 hover:border-sage-300'}`}
                     disabled={isLoading || isSubmitting}
                   >
-                    <option value="">Choose your wellness business type</option>
+                    <option value="">Choose your business type</option>
                     <option value="spa">Day Spa & Medical Spa</option>
                     <option value="salon">Hair & Beauty Salon</option>
                     <option value="wellness">Wellness & Massage Center</option>
@@ -192,7 +192,7 @@ export default function RegisterPage() {
                         <Building className={`w-6 h-6 mx-auto mb-2 ${
                           watchedRole === 'manager' ? 'text-sage-500' : 'text-earth-400'
                         }`} />
-                        <div className="font-medium text-earth-700">Spa Manager</div>
+                        <div className="font-medium text-earth-700">Manager</div>
                         <div className="text-xs text-earth-500 mt-1">
                           Full access & team management
                         </div>
@@ -221,9 +221,9 @@ export default function RegisterPage() {
                         <Users className={`w-6 h-6 mx-auto mb-2 ${
                           watchedRole === 'staff' ? 'text-sage-500' : 'text-earth-400'
                         }`} />
-                        <div className="font-medium text-earth-700">Spa Therapist</div>
+                        <div className="font-medium text-earth-700">Staff</div>
                         <div className="text-xs text-earth-500 mt-1">
-                          Access training materials
+                          Access product materials & training
                         </div>
                       </div>
                     </label>

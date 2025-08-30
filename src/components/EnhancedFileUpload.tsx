@@ -319,45 +319,45 @@ export function EnhancedFileUpload({
     <div className={clsx('w-full', className)}>
       {/* Product Name Field */}
       <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Product Name <span className="text-red-500">*</span>
+        <label className="block text-sm font-medium text-earth-700 mb-3">
+          Product Name <span className="text-accent-coral">*</span>
         </label>
         <input
           type="text"
           value={productName}
           onChange={(e) => setProductName(e.target.value)}
-          placeholder="Enter your product or service name..."
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+          placeholder="Enter your wellness product or service name..."
+          className="w-full px-4 py-3 border-2 border-sage-200/60 rounded-xl bg-white/70 backdrop-blur-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage-300/50 focus:border-sage-300 hover:border-sage-300 text-earth-700"
         />
-        <p className="text-xs text-gray-500 mt-1">
-          This will be used as the main identifier for your training materials.
+        <p className="text-xs text-earth-500 mt-2">
+          This will be used as the main identifier for your wellness training materials.
         </p>
       </div>
 
       {/* Product Description Text Area */}
       <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-earth-700 mb-3">
           Product Description (Optional)
         </label>
         <textarea
           value={productDescription}
           onChange={(e) => setProductDescription(e.target.value)}
-          placeholder="Describe your product, service, or provide additional context for the AI to generate better training materials..."
+          placeholder="Describe your wellness product, service, or provide additional context for the AI to generate better training materials..."
           rows={4}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 resize-none"
+          className="w-full px-4 py-3 border-2 border-sage-200/60 rounded-xl bg-white/70 backdrop-blur-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage-300/50 focus:border-sage-300 hover:border-sage-300 resize-none text-earth-700"
         />
-        <p className="text-xs text-gray-500 mt-1">
-          Provide details about your product, target audience, key benefits, or any specific messaging you want included in the training materials.
+        <p className="text-xs text-earth-500 mt-2">
+          Provide details about your wellness product, target audience, key benefits, or any specific messaging you want included in the training materials.
         </p>
       </div>
 
       {/* Recommended Sales Price */}
-      <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Recommended Sales Price <span className="text-red-500">*</span>
+      <div className="mb-8">
+        <label className="block text-sm font-medium text-earth-700 mb-3">
+          Recommended Sales Price <span className="text-accent-coral">*</span>
         </label>
         <div className="relative">
-          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">$</span>
+          <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-sage-500 text-sm font-medium">$</span>
           <input
             type="text"
             value={recommendedPrice}
@@ -367,11 +367,11 @@ export function EnhancedFileUpload({
               setRecommendedPrice(value);
             }}
             placeholder="0.00"
-            className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+            className="w-full pl-10 pr-4 py-3 border-2 border-sage-200/60 rounded-xl bg-white/70 backdrop-blur-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage-300/50 focus:border-sage-300 hover:border-sage-300 text-earth-700"
           />
         </div>
-        <p className="text-xs text-gray-500 mt-1">
-          Enter the recommended retail price for this product. This will help the AI create appropriate sales scripts and objection handling materials.
+        <p className="text-xs text-earth-500 mt-2">
+          Enter the recommended retail price for this wellness product. This will help the AI create appropriate sales scripts and objection handling materials.
         </p>
       </div>
 
@@ -380,46 +380,53 @@ export function EnhancedFileUpload({
         <div
           {...getRootProps()}
           className={clsx(
-            'relative border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-all duration-200',
+            'relative border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all duration-300 transform hover:scale-[1.01]',
             isDragActive
-              ? 'border-teal-400 bg-teal-50'
-              : 'border-gray-300 hover:border-teal-400 hover:bg-gray-50'
+              ? 'border-sage-400 bg-sage-50/80 backdrop-blur-sm shadow-spa-lg'
+              : 'border-sage-200/60 hover:border-sage-400 hover:bg-sage-50/50 backdrop-blur-sm'
           )}
         >
           <input {...getInputProps()} />
           
-          <div className="flex flex-col items-center justify-center space-y-3">
-            <div className="flex items-center space-x-2">
-              <Paperclip className="w-8 h-8 text-gray-400" />
-              <Upload className="w-8 h-8 text-gray-400" />
+          <div className="flex flex-col items-center justify-center space-y-4">
+            <div className="w-16 h-16 bg-gradient-to-br from-sage-400 to-sage-500 rounded-2xl flex items-center justify-center shadow-spa">
+              <Upload className="w-8 h-8 text-white" />
             </div>
             
             {isDragActive ? (
-              <p className="text-teal-600 font-medium">Drop files here...</p>
+              <div className="text-center">
+                <p className="text-sage-700 font-semibold text-lg">Drop your wellness files here...</p>
+                <p className="text-sage-600 text-sm mt-1">We'll process them for training materials</p>
+              </div>
             ) : (
-              <>
-                <p className="text-gray-600 font-medium">
+              <div className="text-center space-y-2">
+                <p className="text-earth-700 font-semibold text-lg">
+                  Upload Your Wellness Materials
+                </p>
+                <p className="text-earth-600">
                   Drag files here or click to browse
                 </p>
-                <p className="text-sm text-gray-500">
-                  Supports PDF, JPG, PNG, DOCX up to {Math.round(maxFileSize / 1024 / 1024)}MB each
-                </p>
-                <p className="text-xs text-gray-400">
-                  Maximum {maxFiles} files ({files.length} uploaded)
-                </p>
-              </>
+                <div className="bg-sage-50/80 rounded-xl px-4 py-2 mt-4">
+                  <p className="text-sm text-sage-700 font-medium">
+                    Supports PDF, JPG, PNG, DOCX up to {Math.round(maxFileSize / 1024 / 1024)}MB each
+                  </p>
+                  <p className="text-xs text-sage-600 mt-1">
+                    Maximum {maxFiles} files ({files.length} uploaded)
+                  </p>
+                </div>
+              </div>
             )}
           </div>
         </div>
 
         {/* Progress Bar */}
         {files.length > 0 && (
-          <div className="space-y-2">
+          <div className="bg-white/70 backdrop-blur-sm p-4 rounded-xl border border-sage-200/40 shadow-spa space-y-3">
             <div className="flex justify-between text-sm">
-              <span className="text-gray-600">Overall Progress</span>
-              <span className="text-gray-900">{Math.round(overallProgress)}%</span>
+              <span className="text-earth-700 font-medium">Overall Progress</span>
+              <span className="text-sage-700 font-semibold">{Math.round(overallProgress)}%</span>
             </div>
-            <Progress value={overallProgress} className="h-2" />
+            <Progress value={overallProgress} className="h-3" />
           </div>
         )}
 
@@ -429,7 +436,7 @@ export function EnhancedFileUpload({
             {files.map((file) => (
               <div
                 key={file.id}
-                className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg border"
+                className="flex items-center space-x-4 p-4 bg-white/80 backdrop-blur-sm rounded-xl border border-sage-200/40 shadow-spa hover:shadow-spa-lg transition-all duration-300"
               >
                 {file.preview ? (
                   <img
@@ -438,44 +445,48 @@ export function EnhancedFileUpload({
                     className="w-10 h-10 object-cover rounded"
                   />
                 ) : (
-                  <div className="w-10 h-10 bg-gray-200 rounded flex items-center justify-center">
+                  <div className="w-12 h-12 bg-gradient-to-br from-sage-100 to-sage-200 rounded-xl flex items-center justify-center shadow-spa">
                     {getFileIcon(file.file)}
                   </div>
                 )}
 
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900 truncate">
+                  <p className="text-sm font-semibold text-earth-800 truncate">
                     {file.file.name}
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-earth-500 font-medium">
                     {formatFileSize(file.file.size)}
                   </p>
                   
                   {file.status === 'uploading' && (
-                    <div className="mt-1">
+                    <div className="mt-2">
                       <Progress value={file.progress} size="sm" />
                     </div>
                   )}
                   
                   {file.status === 'error' && (
-                    <p className="text-xs text-red-600 mt-1">{file.error}</p>
+                    <p className="text-xs text-accent-coral font-medium mt-1">{file.error}</p>
                   )}
                 </div>
 
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-3">
                   {file.status === 'completed' && (
-                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <div className="w-8 h-8 bg-sage-100 rounded-full flex items-center justify-center">
+                      <CheckCircle className="w-5 h-5 text-sage-600" />
+                    </div>
                   )}
                   {file.status === 'error' && (
-                    <AlertCircle className="w-5 h-5 text-red-500" />
+                    <div className="w-8 h-8 bg-accent-coral/10 rounded-full flex items-center justify-center">
+                      <AlertCircle className="w-5 h-5 text-accent-coral" />
+                    </div>
                   )}
                   
                   <button
                     onClick={() => removeFile(file.id)}
-                    className="p-1 hover:bg-gray-200 rounded transition-colors"
+                    className="p-2 hover:bg-sage-100 rounded-xl transition-all duration-300 transform hover:scale-[1.02]"
                     disabled={isUploading && file.status === 'uploading'}
                   >
-                    <X className="w-4 h-4 text-gray-500" />
+                    <X className="w-4 h-4 text-earth-500 hover:text-accent-coral" />
                   </button>
                 </div>
               </div>
@@ -485,24 +496,24 @@ export function EnhancedFileUpload({
 
         {/* Summary */}
         {files.length > 0 && (
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <div className="flex items-start space-x-2">
-              <div className="text-blue-600">
-                <FileText className="w-5 h-5" />
+          <div className="bg-gradient-to-br from-sage-50/80 to-earth-50/60 border-2 border-sage-200/40 rounded-2xl p-6 shadow-spa backdrop-blur-sm">
+            <div className="flex items-start space-x-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-sage-400 to-sage-500 rounded-xl flex items-center justify-center shadow-spa">
+                <FileText className="w-6 h-6 text-white" />
               </div>
               <div className="flex-1">
-                <h4 className="text-sm font-medium text-blue-900">
-                  Ready for AI Processing
+                <h4 className="text-lg font-display font-semibold text-earth-800 mb-2">
+                  Ready for Wellness AI Processing
                 </h4>
-                <p className="text-sm text-blue-700 mt-1">
+                <p className="text-earth-600 leading-relaxed">
                   {productName.trim() || productDescription.trim() || recommendedPrice.trim()
                     ? `Your ${[
-                        productName.trim() && `product "${productName.trim()}"`,
+                        productName.trim() && `wellness product "${productName.trim()}"`,
                         productDescription.trim() && 'product description',
                         recommendedPrice.trim() && `pricing ($${recommendedPrice.trim()})`,
-                        files.length > 0 && 'uploaded files'
-                      ].filter(Boolean).join(', ')} will be analyzed to create personalized training materials and ideal client profiles.`
-                    : 'Your information will be analyzed to create personalized training materials and ideal client profiles.'
+                        files.length > 0 && 'uploaded materials'
+                      ].filter(Boolean).join(', ')} will be analyzed by our specialized wellness AI to create personalized training materials and ideal client profiles.`
+                    : 'Your information will be analyzed by our wellness AI to create personalized training materials and ideal client profiles.'
                   }
                 </p>
               </div>
@@ -512,21 +523,32 @@ export function EnhancedFileUpload({
 
         {/* Submit Button */}
         {showSubmitButton && (
-          <div className="mt-6 p-4 border-t border-gray-200">
-            <Button
-              variant="primary"
-              size="lg"
+          <div className="mt-8 p-6 border-t-2 border-sage-200/40">
+            <button
               onClick={handleSubmit}
               disabled={!canSubmit}
-              loading={isUploading}
-              className="w-full"
+              className={`w-full py-4 px-6 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-[1.02] shadow-spa hover:shadow-spa-lg ${
+                canSubmit && !isUploading
+                  ? 'bg-gradient-to-br from-sage-400 to-sage-500 hover:from-sage-500 hover:to-sage-600 text-white'
+                  : 'bg-gray-200 text-gray-500 cursor-not-allowed'
+              }`}
             >
-              {isUploading ? 'Processing Files...' : 'Generate Training Materials'}
-            </Button>
+              {isUploading ? (
+                <div className="flex items-center justify-center gap-3">
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  <span>Processing Wellness Materials...</span>
+                </div>
+              ) : (
+                <div className="flex items-center justify-center gap-2">
+                  <span className="text-2xl">🌿</span>
+                  <span>Generate Wellness Training Materials</span>
+                </div>
+              )}
+            </button>
             
             {!canSubmit && !isUploading && (
-              <p className="text-sm text-gray-500 text-center mt-2">
-                Please provide a product name, price, and select at least one file to continue
+              <p className="text-sm text-earth-500 text-center mt-3 bg-earth-50 p-3 rounded-xl">
+                Please provide a wellness product name, price, and select at least one file to continue
               </p>
             )}
           </div>

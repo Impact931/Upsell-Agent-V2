@@ -68,10 +68,10 @@ const TYPE_ICONS = {
 };
 
 const TYPE_COLORS = {
-  script: 'var(--primary-teal)',
-  guide: 'var(--secondary-sage)',
-  faq: 'var(--info)',
-  'objection-handling': 'var(--warning)',
+  script: '#9CAF88', // sage-300
+  guide: '#C8A882', // earth secondary  
+  faq: '#7A9266', // sage-400
+  'objection-handling': '#B8A082', // muted gold
 };
 
 type ViewMode = 'folders' | 'grid' | 'list';
@@ -351,26 +351,26 @@ export default function MaterialsPage() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'published':
-        return 'text-green-700 bg-green-100';
+        return 'text-sage-700 bg-sage-100';
       case 'draft':
-        return 'text-yellow-700 bg-yellow-100';
+        return 'text-earth-700 bg-earth-100';
       case 'archived':
-        return 'text-gray-700 bg-gray-100';
+        return 'text-gray-600 bg-gray-100';
       default:
-        return 'text-gray-700 bg-gray-100';
+        return 'text-gray-600 bg-gray-100';
     }
   };
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case 'beginner':
-        return 'text-green-700 bg-green-100';
+        return 'text-sage-700 bg-sage-100';
       case 'intermediate':
-        return 'text-yellow-700 bg-yellow-100';
+        return 'text-earth-700 bg-earth-100';
       case 'advanced':
-        return 'text-red-700 bg-red-100';
+        return 'text-accent-coral bg-accent-coral/10';
       default:
-        return 'text-gray-700 bg-gray-100';
+        return 'text-gray-600 bg-gray-100';
     }
   };
 
@@ -387,107 +387,117 @@ export default function MaterialsPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: 'var(--neutral-50)' }}>
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-sage-50/30 to-earth-50/30">
       <Header />
       
       <div className="flex-1">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-20 md:pb-8">
-          <PageHeader
-            title="Training Materials"
-            description="Manage and access all your training content"
-            actions={
-              user?.role === 'manager' && (
+          {/* Welcome Section */}
+          <div className="mb-8 animate-fade-in">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-sage-400 to-sage-500 rounded-xl flex items-center justify-center shadow-spa">
+                  <FileText className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h1 className="font-display text-3xl font-semibold text-earth-800">
+                    Product Materials
+                  </h1>
+                  <p className="text-lg text-earth-600">
+                    Manage and access all your product training content
+                  </p>
+                </div>
+              </div>
+              {user?.role === 'manager' && (
                 <Link href="/upload">
-                  <Button variant="primary">
-                    <Plus className="w-4 h-4 mr-2" />
-                    New Upsell Product
-                  </Button>
+                  <button className="bg-gradient-to-br from-sage-400 to-sage-500 hover:from-sage-500 hover:to-sage-600 text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2 shadow-spa hover:shadow-spa-lg transition-all duration-300 transform hover:scale-[1.02]">
+                    <Plus className="w-5 h-5" />
+                    New Product
+                  </button>
                 </Link>
-              )
-            }
-          />
+              )}
+            </div>
+          </div>
 
           {/* Controls */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-6">
-            {/* Search */}
-            <div className="flex-1">
-              <Input
-                type="search"
-                placeholder="Search materials..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                icon={<Search className="w-4 h-4" />}
-              />
-            </div>
-
-            {/* Controls */}
-            <div className="flex gap-2">
-              {/* Filter Toggle */}
-              <Button
-                variant="outline"
-                onClick={() => setShowFilters(!showFilters)}
-                className={clsx(showFilters && 'bg-gray-100')}
-              >
-                <Filter className="w-4 h-4 mr-2" />
-                Filters
-              </Button>
-
-              {/* Sort */}
-              <div className="relative">
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value as SortBy)}
-                  className="form-input pr-10 appearance-none"
-                >
-                  <option value="newest">Newest First</option>
-                  <option value="oldest">Oldest First</option>
-                  <option value="title">Title A-Z</option>
-                  <option value="views">Most Viewed</option>
-                  <option value="rating">Highest Rated</option>
-                </select>
-                <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+          <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-sage-200/40 shadow-spa mb-6">
+            <div className="flex flex-col lg:flex-row gap-4">
+              {/* Search */}
+              <div className="flex-1">
+                <div className="relative">
+                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-sage-400" />
+                  <input
+                    type="search"
+                    placeholder="Search product materials..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-12 pr-4 py-3 border-2 border-sage-200/60 rounded-xl bg-white/70 backdrop-blur-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage-300/50 focus:border-sage-300 hover:border-sage-300"
+                  />
+                </div>
               </div>
 
-              {/* View Mode */}
-              <div className="flex border rounded-md">
-                <Button
-                  variant={viewMode === 'folders' ? 'primary' : 'outline'}
-                  size="sm"
-                  onClick={() => setViewMode('folders')}
-                  className="rounded-r-none border-r-0"
+              {/* Controls */}
+              <div className="flex gap-3">
+                {/* Filter Toggle */}
+                <button
+                  onClick={() => setShowFilters(!showFilters)}
+                  className={`px-4 py-3 rounded-xl font-medium transition-all duration-300 transform hover:scale-[1.02] flex items-center gap-2 ${showFilters ? 'bg-sage-100 text-sage-700 border-sage-300' : 'bg-white/70 text-earth-600 border-sage-200/60 hover:border-sage-300'} border-2`}
                 >
-                  <FolderOpen className="w-4 h-4" />
-                </Button>
-                <Button
-                  variant={viewMode === 'grid' ? 'primary' : 'outline'}
-                  size="sm"
-                  onClick={() => setViewMode('grid')}
-                  className="rounded-none border-r-0"
-                >
-                  <Grid className="w-4 h-4" />
-                </Button>
-                <Button
-                  variant={viewMode === 'list' ? 'primary' : 'outline'}
-                  size="sm"
-                  onClick={() => setViewMode('list')}
-                  className="rounded-l-none"
-                >
-                  <List className="w-4 h-4" />
-                </Button>
+                  <Filter className="w-4 h-4" />
+                  Filters
+                </button>
+
+                {/* Sort */}
+                <div className="relative">
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value as SortBy)}
+                    className="appearance-none bg-white/70 border-2 border-sage-200/60 hover:border-sage-300 focus:border-sage-300 focus:ring-2 focus:ring-sage-300/50 px-4 py-3 pr-10 rounded-xl font-medium text-earth-600 transition-all duration-300 focus:outline-none"
+                  >
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                    <option value="title">Title A-Z</option>
+                    <option value="views">Most Viewed</option>
+                    <option value="rating">Highest Rated</option>
+                  </select>
+                  <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-sage-400 pointer-events-none" />
+                </div>
+
+                {/* View Mode */}
+                <div className="flex bg-white/50 p-1 rounded-xl border border-sage-200/40">
+                  <button
+                    onClick={() => setViewMode('folders')}
+                    className={`p-2 rounded-lg transition-all duration-300 ${viewMode === 'folders' ? 'bg-gradient-to-br from-sage-400 to-sage-500 text-white shadow-spa' : 'text-earth-500 hover:text-sage-600 hover:bg-sage-50/80'}`}
+                  >
+                    <FolderOpen className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => setViewMode('grid')}
+                    className={`p-2 rounded-lg transition-all duration-300 ${viewMode === 'grid' ? 'bg-gradient-to-br from-sage-400 to-sage-500 text-white shadow-spa' : 'text-earth-500 hover:text-sage-600 hover:bg-sage-50/80'}`}
+                  >
+                    <Grid className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => setViewMode('list')}
+                    className={`p-2 rounded-lg transition-all duration-300 ${viewMode === 'list' ? 'bg-gradient-to-br from-sage-400 to-sage-500 text-white shadow-spa' : 'text-earth-500 hover:text-sage-600 hover:bg-sage-50/80'}`}
+                  >
+                    <List className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Filters */}
           {showFilters && (
-            <Card className="p-4 mb-6">
+            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-sage-200/40 shadow-spa mb-6">
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div>
-                  <label className="label mb-2 block">Category</label>
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-earth-700">Category</label>
                   <select
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="form-input"
+                    className="w-full px-4 py-3 border-2 border-sage-200/60 rounded-xl bg-white/70 backdrop-blur-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage-300/50 focus:border-sage-300 hover:border-sage-300 text-earth-600"
                   >
                     <option value="all">All Categories</option>
                     {categories.map(category => (
@@ -496,12 +506,12 @@ export default function MaterialsPage() {
                   </select>
                 </div>
 
-                <div>
-                  <label className="label mb-2 block">Type</label>
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-earth-700">Type</label>
                   <select
                     value={selectedType}
                     onChange={(e) => setSelectedType(e.target.value)}
-                    className="form-input"
+                    className="w-full px-4 py-3 border-2 border-sage-200/60 rounded-xl bg-white/70 backdrop-blur-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage-300/50 focus:border-sage-300 hover:border-sage-300 text-earth-600"
                   >
                     <option value="all">All Types</option>
                     <option value="script">Scripts</option>
@@ -512,12 +522,12 @@ export default function MaterialsPage() {
                 </div>
 
                 {user?.role === 'manager' && (
-                  <div>
-                    <label className="label mb-2 block">Status</label>
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-earth-700">Status</label>
                     <select
                       value={selectedStatus}
                       onChange={(e) => setSelectedStatus(e.target.value)}
-                      className="form-input"
+                      className="w-full px-4 py-3 border-2 border-sage-200/60 rounded-xl bg-white/70 backdrop-blur-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage-300/50 focus:border-sage-300 hover:border-sage-300 text-earth-600"
                     >
                       <option value="all">All Status</option>
                       <option value="published">Published</option>
@@ -528,54 +538,58 @@ export default function MaterialsPage() {
                 )}
 
                 <div className="flex items-end">
-                  <Button
-                    variant="outline"
+                  <button
                     onClick={() => {
                       setSelectedCategory('all');
                       setSelectedType('all');
                       setSelectedStatus('all');
                       setSearchQuery('');
                     }}
+                    className="bg-white/70 border-2 border-sage-200/60 hover:border-sage-300 text-earth-600 hover:text-sage-700 px-4 py-3 rounded-xl font-medium transition-all duration-300 transform hover:scale-[1.02] w-full"
                   >
                     Clear All
-                  </Button>
+                  </button>
                 </div>
               </div>
-            </Card>
+            </div>
           )}
 
           {/* Results Count */}
-          <div className="flex items-center justify-between mb-4">
-            <p className="text-sm" style={{ color: 'var(--neutral-600)' }}>
-              {viewMode === 'folders' 
-                ? `${filteredProductGroups.length} product folder${filteredProductGroups.length !== 1 ? 's' : ''} • ${filteredMaterials.length} material${filteredMaterials.length !== 1 ? 's' : ''}`
-                : `${filteredMaterials.length} material${filteredMaterials.length !== 1 ? 's' : ''} found`
-              }
-            </p>
+          <div className="flex items-center justify-between mb-6">
+            <div className="bg-white/60 backdrop-blur-sm px-4 py-2 rounded-xl border border-sage-200/40">
+              <p className="text-sm font-medium text-earth-600">
+                {viewMode === 'folders' 
+                  ? `${filteredProductGroups.length} product folder${filteredProductGroups.length !== 1 ? 's' : ''} • ${filteredMaterials.length} material${filteredMaterials.length !== 1 ? 's' : ''}`
+                  : `${filteredMaterials.length} material${filteredMaterials.length !== 1 ? 's' : ''} found`
+                }
+              </p>
+            </div>
           </div>
 
           {/* Materials Display */}
           {(viewMode === 'folders' ? filteredProductGroups.length === 0 : filteredMaterials.length === 0) ? (
-            <Card className="text-center p-12">
-              <FileText className="w-16 h-16 mx-auto mb-4" style={{ color: 'var(--neutral-300)' }} />
-              <h3 className="heading-3 mb-2">No materials found</h3>
-              <p className="body-base mb-6" style={{ color: 'var(--neutral-600)' }}>
+            <div className="bg-white/80 backdrop-blur-sm text-center p-12 rounded-2xl border border-sage-200/40 shadow-spa">
+              <div className="w-16 h-16 bg-sage-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <FileText className="w-8 h-8 text-sage-400" />
+              </div>
+              <h3 className="font-display text-2xl font-semibold text-earth-800 mb-3">No materials found</h3>
+              <p className="text-lg text-earth-600 mb-8">
                 {searchQuery || selectedCategory !== 'all' || selectedType !== 'all'
                   ? 'Try adjusting your search or filters'
                   : error 
                     ? 'Error loading training materials. Please try again.'
-                    : 'Upload your first training material to get started'
+                    : 'Upload your first product to get started'
                 }
               </p>
               {user?.role === 'manager' && (
                 <Link href="/upload">
-                  <Button variant="primary">
-                    <Plus className="w-4 h-4 mr-2" />
-                    New Upsell Product
-                  </Button>
+                  <button className="bg-gradient-to-br from-sage-400 to-sage-500 hover:from-sage-500 hover:to-sage-600 text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2 shadow-spa hover:shadow-spa-lg transition-all duration-300 transform hover:scale-[1.02] mx-auto">
+                    <Plus className="w-5 h-5" />
+                    New Product
+                  </button>
                 </Link>
               )}
-            </Card>
+            </div>
           ) : viewMode === 'folders' ? (
             <>
               <div className="space-y-4">
@@ -595,64 +609,70 @@ export default function MaterialsPage() {
               
               {/* Pagination */}
               {totalPages > 1 && (
-                <Card className="mt-6">
-                  <CardContent className="p-4">
-                    <div className="flex items-center justify-between">
-                      <div className="text-sm text-gray-600">
-                        Showing {startIndex + 1}-{Math.min(endIndex, totalProducts)} of {totalProducts} products
+                <div className="mt-8 bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-sage-200/40 shadow-spa">
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm text-earth-600 font-medium">
+                      Showing {startIndex + 1}-{Math.min(endIndex, totalProducts)} of {totalProducts} products
+                    </div>
+                    
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                        disabled={currentPage === 1}
+                        className={`px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition-all duration-300 transform hover:scale-[1.02] ${
+                          currentPage === 1 
+                            ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                            : 'bg-white/70 border-2 border-sage-200/60 hover:border-sage-300 text-sage-600 hover:text-sage-700'
+                        }`}
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                        Previous
+                      </button>
+                      
+                      <div className="flex items-center gap-1">
+                        {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                          let pageNumber;
+                          if (totalPages <= 5) {
+                            pageNumber = i + 1;
+                          } else if (currentPage <= 3) {
+                            pageNumber = i + 1;
+                          } else if (currentPage >= totalPages - 2) {
+                            pageNumber = totalPages - 4 + i;
+                          } else {
+                            pageNumber = currentPage - 2 + i;
+                          }
+                          
+                          return (
+                            <button
+                              key={pageNumber}
+                              onClick={() => setCurrentPage(pageNumber)}
+                              className={`w-10 h-10 rounded-lg font-semibold transition-all duration-300 transform hover:scale-[1.02] ${
+                                currentPage === pageNumber
+                                  ? 'bg-gradient-to-br from-sage-400 to-sage-500 text-white shadow-spa'
+                                  : 'bg-white/70 border-2 border-sage-200/60 hover:border-sage-300 text-sage-600 hover:text-sage-700'
+                              }`}
+                            >
+                              {pageNumber}
+                            </button>
+                          );
+                        })}
                       </div>
                       
-                      <div className="flex items-center gap-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-                          disabled={currentPage === 1}
-                        >
-                          <ChevronLeft className="w-4 h-4" />
-                          Previous
-                        </Button>
-                        
-                        <div className="flex items-center gap-1">
-                          {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                            let pageNumber;
-                            if (totalPages <= 5) {
-                              pageNumber = i + 1;
-                            } else if (currentPage <= 3) {
-                              pageNumber = i + 1;
-                            } else if (currentPage >= totalPages - 2) {
-                              pageNumber = totalPages - 4 + i;
-                            } else {
-                              pageNumber = currentPage - 2 + i;
-                            }
-                            
-                            return (
-                              <Button
-                                key={pageNumber}
-                                variant={currentPage === pageNumber ? "primary" : "outline"}
-                                size="sm"
-                                onClick={() => setCurrentPage(pageNumber)}
-                                className="w-8 h-8 p-0"
-                              >
-                                {pageNumber}
-                              </Button>
-                            );
-                          })}
-                        </div>
-                        
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
-                          disabled={currentPage === totalPages}
-                        >
-                          Next
-                          <ChevronRight className="w-4 h-4" />
-                        </Button>
-                      </div>
+                      <button
+                        onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                        disabled={currentPage === totalPages}
+                        className={`px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition-all duration-300 transform hover:scale-[1.02] ${
+                          currentPage === totalPages 
+                            ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                            : 'bg-white/70 border-2 border-sage-200/60 hover:border-sage-300 text-sage-600 hover:text-sage-700'
+                        }`}
+                      >
+                        Next
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               )}
             </>
           ) : (
@@ -665,14 +685,14 @@ export default function MaterialsPage() {
                 const Icon = TYPE_ICONS[material.type];
                 
                 return (
-                  <Card 
+                  <div 
                     key={material.id} 
                     className={clsx(
-                      'overflow-hidden',
+                      'bg-white/80 backdrop-blur-sm rounded-2xl border border-sage-200/40 shadow-spa hover:shadow-spa-lg transition-all duration-300 transform hover:scale-[1.02] overflow-hidden',
                       viewMode === 'list' && 'flex'
                     )}
                   >
-                    <CardContent className={clsx('p-0', viewMode === 'list' && 'flex w-full')}>
+                    <div className={clsx('p-0', viewMode === 'list' && 'flex w-full')}>
                       {/* Type indicator */}
                       <div 
                         className={clsx(
@@ -700,84 +720,79 @@ export default function MaterialsPage() {
                                 </span>
                               </div>
                               
-                              <Button
-                                variant="icon"
-                                size="sm"
+                              <button
                                 onClick={() => handleToggleFavorite(material.id)}
+                                className="p-2 rounded-lg bg-white/50 border border-sage-200/60 hover:border-sage-300 transition-all duration-300 transform hover:scale-[1.02]"
                               >
                                 <Star 
                                   className={clsx('w-4 h-4', material.isFavorited && 'fill-current')}
-                                  style={{ color: material.isFavorited ? 'var(--warning)' : 'var(--neutral-400)' }}
+                                  style={{ color: material.isFavorited ? '#F59E0B' : '#9CA3AF' }}
                                 />
-                              </Button>
+                              </button>
                             </div>
 
-                            <h3 className="heading-4 mb-2">{material.title}</h3>
-                            <p className="body-small mb-4" style={{ color: 'var(--neutral-600)' }}>
+                            <h3 className="font-display text-xl font-semibold text-earth-800 mb-2">{material.title}</h3>
+                            <p className="text-earth-600 mb-4">
                               {material.description}
                             </p>
 
                             {/* Meta info */}
-                            <div className="flex flex-wrap items-center gap-3 text-xs mb-4" style={{ color: 'var(--neutral-500)' }}>
-                              <span className="flex items-center gap-1">
+                            <div className="flex flex-wrap items-center gap-3 text-xs mb-4 text-earth-500">
+                              <span className="flex items-center gap-1 bg-sage-50 px-2 py-1 rounded-lg">
                                 <Clock className="w-3 h-3" />
                                 {material.duration} min
                               </span>
-                              <span className="flex items-center gap-1">
+                              <span className="flex items-center gap-1 bg-sage-50 px-2 py-1 rounded-lg">
                                 <Eye className="w-3 h-3" />
                                 {material.views} views
                               </span>
-                              <span className="flex items-center gap-1">
-                                <Star className="w-3 h-3 fill-current" style={{ color: 'var(--warning)' }} />
+                              <span className="flex items-center gap-1 bg-sage-50 px-2 py-1 rounded-lg">
+                                <Star className="w-3 h-3 fill-current text-yellow-500" />
                                 {material.rating}
                               </span>
-                              <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(material.difficulty)}`}>
+                              <span className={`px-3 py-1 rounded-full text-xs font-medium ${getDifficultyColor(material.difficulty)}`}>
                                 {material.difficulty}
                               </span>
                             </div>
 
                             {/* Status and date */}
                             <div className="flex items-center justify-between text-xs mb-4">
-                              <span className={`px-2 py-1 rounded-full font-medium ${getStatusColor(material.status)}`}>
+                              <span className={`px-3 py-1 rounded-full font-medium ${getStatusColor(material.status)}`}>
                                 {material.status}
                               </span>
-                              <span style={{ color: 'var(--neutral-500)' }}>
+                              <span className="text-earth-500">
                                 {formatDate(material.createdAt)}
                               </span>
                             </div>
 
                             {/* Actions */}
                             <div className="flex items-center gap-2">
-                              <Button
-                                variant="primary"
-                                size="sm"
-                                className="flex-1"
+                              <button
                                 onClick={() => handleMaterialSelect(material)}
+                                className="flex-1 bg-gradient-to-br from-sage-400 to-sage-500 hover:from-sage-500 hover:to-sage-600 text-white px-4 py-2 rounded-lg font-medium flex items-center justify-center gap-2 transition-all duration-300 transform hover:scale-[1.02]"
                               >
-                                <Eye className="w-4 h-4 mr-2" />
+                                <Eye className="w-4 h-4" />
                                 View
-                              </Button>
+                              </button>
                               
-                              <Button 
-                                variant="outline" 
-                                size="sm"
+                              <button 
                                 onClick={() => handleShare(material)}
+                                className="bg-white/70 border-2 border-sage-200/60 hover:border-sage-300 text-sage-600 hover:text-sage-700 p-2 rounded-lg transition-all duration-300 transform hover:scale-[1.02]"
                               >
                                 <Share className="w-4 h-4" />
-                              </Button>
+                              </button>
                               
                               {user?.role === 'manager' && (
                                 <>
-                                  <Button variant="outline" size="sm">
+                                  <button className="bg-white/70 border-2 border-sage-200/60 hover:border-sage-300 text-sage-600 hover:text-sage-700 p-2 rounded-lg transition-all duration-300 transform hover:scale-[1.02]">
                                     <Edit className="w-4 h-4" />
-                                  </Button>
-                                  <Button 
-                                    variant="outline" 
-                                    size="sm"
+                                  </button>
+                                  <button 
                                     onClick={() => setMaterialToDelete(material)}
+                                    className="bg-white/70 border-2 border-accent-coral/40 hover:border-accent-coral text-accent-coral hover:text-accent-coral p-2 rounded-lg transition-all duration-300 transform hover:scale-[1.02]"
                                   >
                                     <Trash2 className="w-4 h-4" />
-                                  </Button>
+                                  </button>
                                 </>
                               )}
                             </div>
@@ -791,19 +806,19 @@ export default function MaterialsPage() {
                                   className="w-5 h-5" 
                                   style={{ color: TYPE_COLORS[material.type] }}
                                 />
-                                <h3 className="heading-4">{material.title}</h3>
-                                <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(material.status)}`}>
+                                <h3 className="font-display text-lg font-semibold text-earth-800">{material.title}</h3>
+                                <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(material.status)}`}>
                                   {material.status}
                                 </span>
                               </div>
                               
-                              <p className="body-small mb-2" style={{ color: 'var(--neutral-600)' }}>
+                              <p className="text-earth-600 mb-2">
                                 {material.description}
                               </p>
 
-                              <div className="flex items-center gap-4 text-xs" style={{ color: 'var(--neutral-500)' }}>
-                                <span>{material.type.replace('-', ' ')}</span>
-                                <span>{material.category}</span>
+                              <div className="flex items-center gap-4 text-xs text-earth-500">
+                                <span className="bg-sage-50 px-2 py-1 rounded">{material.type.replace('-', ' ')}</span>
+                                <span className="bg-sage-50 px-2 py-1 rounded">{material.category}</span>
                                 <span>{material.duration} min</span>
                                 <span>{material.views} views</span>
                                 <span>★ {material.rating}</span>
@@ -812,54 +827,50 @@ export default function MaterialsPage() {
                             </div>
 
                             <div className="flex items-center gap-2 ml-4">
-                              <Button
-                                variant="icon"
-                                size="sm"
+                              <button
                                 onClick={() => handleToggleFavorite(material.id)}
+                                className="p-2 rounded-lg bg-white/70 border-2 border-sage-200/60 hover:border-sage-300 transition-all duration-300 transform hover:scale-[1.02]"
                               >
                                 <Star 
                                   className={clsx('w-4 h-4', material.isFavorited && 'fill-current')}
-                                  style={{ color: material.isFavorited ? 'var(--warning)' : 'var(--neutral-400)' }}
+                                  style={{ color: material.isFavorited ? '#F59E0B' : '#9CA3AF' }}
                                 />
-                              </Button>
+                              </button>
                               
-                              <Button
-                                variant="outline"
-                                size="sm"
+                              <button
                                 onClick={() => handleMaterialSelect(material)}
+                                className="bg-gradient-to-br from-sage-400 to-sage-500 hover:from-sage-500 hover:to-sage-600 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition-all duration-300 transform hover:scale-[1.02]"
                               >
-                                <Eye className="w-4 h-4 mr-2" />
+                                <Eye className="w-4 h-4" />
                                 View
-                              </Button>
+                              </button>
                               
-                              <Button 
-                                variant="outline" 
-                                size="sm"
+                              <button 
                                 onClick={() => handleShare(material)}
+                                className="bg-white/70 border-2 border-sage-200/60 hover:border-sage-300 text-sage-600 hover:text-sage-700 p-2 rounded-lg transition-all duration-300 transform hover:scale-[1.02]"
                               >
                                 <Share className="w-4 h-4" />
-                              </Button>
+                              </button>
                               
                               {user?.role === 'manager' && (
                                 <>
-                                  <Button variant="outline" size="sm">
+                                  <button className="bg-white/70 border-2 border-sage-200/60 hover:border-sage-300 text-sage-600 hover:text-sage-700 p-2 rounded-lg transition-all duration-300 transform hover:scale-[1.02]">
                                     <Edit className="w-4 h-4" />
-                                  </Button>
-                                  <Button 
-                                    variant="outline" 
-                                    size="sm"
+                                  </button>
+                                  <button 
                                     onClick={() => setMaterialToDelete(material)}
+                                    className="bg-white/70 border-2 border-accent-coral/40 hover:border-accent-coral text-accent-coral hover:text-accent-coral p-2 rounded-lg transition-all duration-300 transform hover:scale-[1.02]"
                                   >
                                     <Trash2 className="w-4 h-4" />
-                                  </Button>
+                                  </button>
                                 </>
                               )}
                             </div>
                           </div>
                         )}
                       </div>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </div>
                 );
               })}
             </div>
