@@ -1,16 +1,30 @@
-/* Design System Tokens */
-:root {
-  /* Primary Colors */
-  --primary-teal: #00796B;
-  --primary-teal-dark: #004D40;
-  --primary-teal-light: #4DB6AC;
-  --primary-teal-pale: #E0F2F1;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap');
 
-  /* Secondary Colors */
-  --secondary-sage: #689F38;
-  --secondary-sage-dark: #33691E;
-  --secondary-sage-light: #8BC34A;
-  --secondary-sage-pale: #F1F8E9;
+/* Spa/Wellness Design System Tokens */
+:root {
+  /* Primary Sage Colors */
+  --primary-sage: #9CAF88;
+  --primary-sage-dark: #5e7050;
+  --primary-sage-light: #c7d1c7;
+  --primary-sage-pale: #f6f8f6;
+  
+  /* Legacy primary mapping to sage for compatibility */
+  --primary-teal: #9CAF88;
+  --primary-teal-dark: #5e7050;
+  --primary-teal-light: #c7d1c7;
+  --primary-teal-pale: #f6f8f6;
+
+  /* Secondary Earth Tones */
+  --secondary-earth: #C8A882;
+  --secondary-earth-dark: #837055;
+  --secondary-earth-light: #ddd5bb;
+  --secondary-earth-pale: #faf9f7;
+  
+  /* Legacy secondary mapping to earth for compatibility */
+  --secondary-sage: #C8A882;
+  --secondary-sage-dark: #837055;
+  --secondary-sage-light: #ddd5bb;
+  --secondary-sage-pale: #faf9f7;
 
   /* Neutral Colors */
   --neutral-900: #212121;
@@ -92,7 +106,7 @@
   
   body {
     font-family: var(--font-primary);
-    background-color: var(--neutral-50);
+    background-color: var(--secondary-earth-pale);
     color: var(--neutral-900);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;

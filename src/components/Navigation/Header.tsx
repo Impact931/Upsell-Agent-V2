@@ -113,13 +113,13 @@ export function Header() {
   );
 
   return (
-    <header className="bg-white border-b shadow-sm sticky top-0 z-50" style={{ borderColor: 'var(--neutral-200)' }}>
+    <header className="bg-white/95 backdrop-blur-sm border-b border-sage-200/40 shadow-spa sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo and Mobile Menu Toggle */}
           <div className="flex items-center">
             <button
-              className="md:hidden p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal-500"
+              className="md:hidden p-2 rounded-xl text-earth-400 hover:text-sage-500 hover:bg-sage-50/50 focus:outline-none focus:ring-2 focus:ring-sage-300/50 transition-all duration-200"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle navigation menu"
               aria-expanded={isMobileMenuOpen}
@@ -131,19 +131,21 @@ export function Header() {
               )}
             </button>
             
-            <Link href="/dashboard" className="flex items-center ml-2 md:ml-0">
-              <div 
-                className="w-8 h-8 rounded-lg flex items-center justify-center mr-3"
-                style={{ backgroundColor: 'var(--primary-teal)' }}
-              >
-                <span className="text-white font-bold text-lg">U</span>
+            <Link href="/dashboard" className="flex items-center ml-2 md:ml-0 group">
+              <div className="w-10 h-10 bg-gradient-to-br from-sage-400 to-sage-500 rounded-xl flex items-center justify-center mr-3 shadow-spa group-hover:shadow-spa-lg group-hover:scale-105 transition-all duration-300">
+                <span className="text-white font-bold text-xl font-display">S</span>
               </div>
-              <span className="text-xl font-semibold text-gray-900 hidden sm:block">Upsell Agent</span>
+              <div className="hidden sm:block">
+                <div className="font-display text-xl font-semibold text-earth-800 group-hover:text-sage-600 transition-colors">
+                  Serenity Spa
+                </div>
+                <div className="text-xs text-earth-500 -mt-1">Management Platform</div>
+              </div>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center space-x-2">
             {filteredNavItems.map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href;
@@ -152,19 +154,16 @@ export function Header() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={clsx(
-                    'flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors',
+                  className={`flex items-center px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 group ${
                     isActive
-                      ? 'bg-teal-100 text-teal-900'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                  )}
-                  style={{
-                    backgroundColor: isActive ? 'var(--primary-teal-pale)' : 'transparent',
-                    color: isActive ? 'var(--primary-teal-dark)' : 'var(--neutral-600)',
-                  }}
+                      ? 'bg-sage-100/70 text-sage-700 shadow-spa'
+                      : 'text-earth-600 hover:text-sage-600 hover:bg-sage-50/60'
+                  }`}
                 >
-                  <Icon className="w-4 h-4 mr-2" />
-                  {item.name}
+                  <Icon className={`w-4 h-4 mr-2 transition-colors ${
+                    isActive ? 'text-sage-600' : 'text-earth-400 group-hover:text-sage-500'
+                  }`} />
+                  <span className="font-medium">{item.name}</span>
                 </Link>
               );
             })}
@@ -177,18 +176,18 @@ export function Header() {
               <form onSubmit={handleSearch} className="relative">
                 <input
                   type="search"
-                  className="w-64 px-4 py-2 pl-10 pr-4 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
-                  placeholder="Search materials..."
+                  className="w-64 px-4 py-2 pl-10 pr-4 text-sm border-2 border-sage-200/60 bg-white/70 backdrop-blur-sm rounded-xl focus:ring-2 focus:ring-sage-300/50 focus:border-sage-300 focus:outline-none transition-all duration-300 placeholder:text-earth-400"
+                  placeholder="Search wellness materials..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   aria-label="Search training materials"
                 />
                 <button
                   type="submit"
-                  className="absolute inset-y-0 left-0 pl-3 flex items-center"
+                  className="absolute inset-y-0 left-0 pl-3 flex items-center text-earth-400 hover:text-sage-500 transition-colors"
                   aria-label="Search"
                 >
-                  <Search className="w-4 h-4 text-gray-400" />
+                  <Search className="w-4 h-4" />
                 </button>
               </form>
             </div>
@@ -196,15 +195,14 @@ export function Header() {
             {/* Notifications */}
             <div className="relative" ref={notificationRef}>
               <button
-                className="p-2 text-gray-400 hover:text-gray-500 hover:bg-gray-100 rounded-md relative"
+                className="p-2 text-earth-400 hover:text-sage-500 hover:bg-sage-50/60 rounded-xl relative transition-all duration-200"
                 aria-label="Notifications"
                 onClick={() => setShowNotifications(!showNotifications)}
               >
                 <Bell className="w-5 h-5" />
                 {unreadCount > 0 && (
                   <span 
-                    className="absolute -top-1 -right-1 w-3 h-3 rounded-full flex items-center justify-center text-xs font-bold text-white"
-                    style={{ backgroundColor: 'var(--error)' }}
+                    className="absolute -top-1 -right-1 w-4 h-4 bg-accent-coral rounded-full flex items-center justify-center text-xs font-bold text-white animate-pulse"
                     aria-label={`${unreadCount} unread notifications`}
                   >
                     {unreadCount}
@@ -271,18 +269,18 @@ export function Header() {
             {/* User Menu */}
             <div className="relative" ref={userMenuRef}>
               <button
-                className="flex items-center space-x-2 p-2 text-sm rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="flex items-center space-x-2 p-2 text-sm rounded-xl text-earth-600 hover:bg-sage-50/60 focus:outline-none focus:ring-2 focus:ring-sage-300/50 transition-all duration-200"
                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                 aria-label="User menu"
                 aria-expanded={isUserMenuOpen}
               >
-                <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-                  <User className="w-4 h-4" style={{ color: 'var(--neutral-600)' }} />
+                <div className="w-8 h-8 bg-gradient-to-br from-sage-200 to-earth-200 rounded-full flex items-center justify-center">
+                  <User className="w-4 h-4 text-sage-600" />
                 </div>
                 <span className="hidden sm:block font-medium">
                   {user?.businessName || 'User'}
                 </span>
-                <ChevronDown className="w-4 h-4 text-gray-400" />
+                <ChevronDown className="w-4 h-4 text-earth-400" />
               </button>
 
               {/* User Menu Dropdown */}
