@@ -142,85 +142,90 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: 'var(--neutral-50)' }}>
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-sage-50/30 to-earth-50/30">
       <Header />
       
       <div className="flex-1">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-20 md:pb-8">
           {/* Welcome Section */}
-          <div className="mb-8">
-            <h1 className="heading-1 mb-2">
-              Welcome back, {user?.businessName}! 👋
-            </h1>
-            <p className="body-large" style={{ color: 'var(--neutral-600)' }}>
-              Here's what's happening with your sales training today
-            </p>
+          <div className="mb-8 animate-fade-in">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-sage-400 to-sage-500 rounded-xl flex items-center justify-center shadow-spa">
+                <span className="text-2xl">🌿</span>
+              </div>
+              <div>
+                <h1 className="font-display text-3xl font-semibold text-earth-800">
+                  Welcome back, {user?.businessName}
+                </h1>
+                <p className="text-lg text-earth-600">
+                  Your wellness management dashboard
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* Quick Actions */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <Button
-              variant="primary"
-              className="h-24 flex-col btn--mobile-full"
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+            <button
               onClick={() => setShowUpload(true)}
+              className="group bg-gradient-to-br from-sage-400 to-sage-500 hover:from-sage-500 hover:to-sage-600 text-white p-6 rounded-2xl shadow-spa hover:shadow-spa-lg transition-all duration-300 transform hover:scale-[1.02]"
             >
-              <Upload className="w-6 h-6 mb-2" />
-              New Upsell Product
-            </Button>
+              <div className="flex flex-col items-center text-center">
+                <Upload className="w-8 h-8 mb-3 group-hover:scale-110 transition-transform" />
+                <span className="font-semibold text-lg">New Wellness Product</span>
+                <span className="text-sm opacity-90 mt-1">Upload & generate materials</span>
+              </div>
+            </button>
             
-            <Link href="/materials" className="btn btn--secondary h-24 flex-col">
-              <FileText className="w-6 h-6 mb-2" />
-              View Materials
+            <Link href="/materials" className="group bg-white/80 backdrop-blur-sm border-2 border-sage-200/60 hover:border-sage-300 p-6 rounded-2xl shadow-spa hover:shadow-spa-lg transition-all duration-300 transform hover:scale-[1.02]">
+              <div className="flex flex-col items-center text-center">
+                <FileText className="w-8 h-8 mb-3 text-sage-500 group-hover:text-sage-600 group-hover:scale-110 transition-all" />
+                <span className="font-semibold text-lg text-earth-700">View Materials</span>
+                <span className="text-sm text-earth-500 mt-1">Browse training content</span>
+              </div>
             </Link>
             
-            
-            <Link href="/analytics" className="btn btn--outline h-24 flex-col">
-              <BarChart3 className="w-6 h-6 mb-2" />
-              View Analytics
+            <Link href="/analytics" className="group bg-white/80 backdrop-blur-sm border-2 border-earth-200/60 hover:border-earth-300 p-6 rounded-2xl shadow-spa hover:shadow-spa-lg transition-all duration-300 transform hover:scale-[1.02]">
+              <div className="flex flex-col items-center text-center">
+                <BarChart3 className="w-8 h-8 mb-3 text-earth-500 group-hover:text-earth-600 group-hover:scale-110 transition-all" />
+                <span className="font-semibold text-lg text-earth-700">Analytics</span>
+                <span className="text-sm text-earth-500 mt-1">Performance insights</span>
+              </div>
             </Link>
           </div>
 
           {/* Stats Cards */}
           {stats && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-              <Card className="text-center p-6">
-                <div 
-                  className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3"
-                  style={{ backgroundColor: 'var(--primary-teal-pale)' }}
-                >
-                  <FileText className="w-6 h-6" style={{ color: 'var(--primary-teal)' }} />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-sage-100/50 shadow-spa text-center group hover:shadow-spa-lg transition-all duration-300">
+                <div className="w-14 h-14 bg-gradient-to-br from-sage-100 to-sage-200 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                  <FileText className="w-7 h-7 text-sage-600" />
                 </div>
-                <h3 className="heading-3 mb-1">{stats.totalMaterials}</h3>
-                <p className="body-small" style={{ color: 'var(--neutral-600)' }}>
-                  Upsell Products
+                <h3 className="text-2xl font-bold text-earth-800 mb-1">{stats.totalMaterials}</h3>
+                <p className="text-earth-600 font-medium">
+                  Wellness Products
                 </p>
-              </Card>
+              </div>
 
-              <Card className="text-center p-6">
-                <div 
-                  className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3"
-                  style={{ backgroundColor: 'var(--secondary-sage-pale)' }}
-                >
-                  <TrendingUp className="w-6 h-6" style={{ color: 'var(--secondary-sage)' }} />
+              <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-earth-100/50 shadow-spa text-center group hover:shadow-spa-lg transition-all duration-300">
+                <div className="w-14 h-14 bg-gradient-to-br from-earth-100 to-earth-200 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                  <TrendingUp className="w-7 h-7 text-earth-600" />
                 </div>
-                <h3 className="heading-3 mb-1">{stats.totalMaterials}</h3>
-                <p className="body-small" style={{ color: 'var(--neutral-600)' }}>
-                  Products Ready
+                <h3 className="text-2xl font-bold text-earth-800 mb-1">{stats.totalMaterials}</h3>
+                <p className="text-earth-600 font-medium">
+                  Ready for Training
                 </p>
-              </Card>
+              </div>
 
-              <Card className="text-center p-6">
-                <div 
-                  className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3"
-                  style={{ backgroundColor: 'var(--info-light)' }}
-                >
-                  <Eye className="w-6 h-6" style={{ color: 'var(--info)' }} />
+              <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-sage-100/50 shadow-spa text-center group hover:shadow-spa-lg transition-all duration-300">
+                <div className="w-14 h-14 bg-gradient-to-br from-accent-mint/20 to-accent-mint/40 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                  <Eye className="w-7 h-7 text-sage-600" />
                 </div>
-                <h3 className="heading-3 mb-1">{stats.totalViews}</h3>
-                <p className="body-small" style={{ color: 'var(--neutral-600)' }}>
-                  Total Views
+                <h3 className="text-2xl font-bold text-earth-800 mb-1">{stats.totalViews}</h3>
+                <p className="text-earth-600 font-medium">
+                  Team Engagements
                 </p>
-              </Card>
+              </div>
             </div>
           )}
 
