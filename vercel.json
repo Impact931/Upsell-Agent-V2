@@ -1,10 +1,12 @@
 {
   "env": {
-    "NODE_ENV": "production"
+    "NODE_ENV": "production",
+    "SHARP_IGNORE_GLOBAL_LIBVIPS": "1"
   },
   "build": {
     "env": {
-      "NODE_ENV": "production"
+      "NODE_ENV": "production",
+      "SHARP_IGNORE_GLOBAL_LIBVIPS": "1"
     }
   },
   "functions": {
@@ -16,5 +18,5 @@
   "framework": "nextjs",
   "buildCommand": "npm run build",
   "outputDirectory": ".next",
-  "installCommand": "npm ci"
+  "installCommand": "npm ci --no-optional"
 }
