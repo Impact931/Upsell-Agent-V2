@@ -1,14 +1,19 @@
 import { z } from 'zod';
 import { ValidationError } from './errors';
 
-// Enhanced password validation
-const PasswordSchema = z.string()
+// Enhanced password validation for registration
+const RegistrationPasswordSchema = z.string()
   .min(8, 'Password must be at least 8 characters')
   .max(128, 'Password must be less than 128 characters')
   .refine(password => /[A-Z]/.test(password), 'Password must contain at least one uppercase letter')
   .refine(password => /[a-z]/.test(password), 'Password must contain at least one lowercase letter')
   .refine(password => /\d/.test(password), 'Password must contain at least one number')
   .refine(password => /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password), 'Password must contain at least one special character');
+
+// Simpler password validation for login (existing users)
+const LoginPasswordSchema = z.string()
+  .min(1, 'Password is required')
+  .max(128, 'Password must be less than 128 characters');
 
 // Email validation with additional security checks
 const EmailSchema = z.string()
@@ -21,7 +26,7 @@ const EmailSchema = z.string()
 // User validation schemas
 export const AuthSchema = z.object({
   email: EmailSchema,
-  password: PasswordSchema,
+  password: LoginPasswordSchema,
 });
 
 // String sanitization helper
@@ -32,7 +37,9 @@ const SanitizedStringSchema = (minLength: number = 1, maxLength: number = 255) =
     .max(maxLength, `Must be less than ${maxLength} characters`)
     .refine(str => !/[<>\"'&]/.test(str), 'Invalid characters detected');
 
-export const RegisterSchema = AuthSchema.extend({
+export const RegisterSchema = z.object({
+  email: EmailSchema,
+  password: RegistrationPasswordSchema,
   businessName: SanitizedStringSchema(2, 100),
   businessType: z.enum(['spa', 'salon', 'wellness'], {
     errorMap: () => ({ message: 'Business type must be spa, salon, or wellness' }),

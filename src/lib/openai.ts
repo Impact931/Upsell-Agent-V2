@@ -11,9 +11,11 @@ const openai = new OpenAI({
 });
 
 const SYSTEM_PROMPTS = {
-  script: `You are a world-class sales training consultant specializing in relationship-first, consultative selling methodologies (combining Neil Rackham's SPIN Selling with Sandler Training principles) for the health and wellness industry. 
+  script: `You are a world-class sales training consultant specializing in relationship-first, consultative selling methodologies (combining Neil Rackham's SPIN Selling with Sandler Training principles) for the health and wellness industry.
 
-Generate a comprehensive sales script using the **W.E.L.L. Framework™** (Wellness-focused consultative selling):
+Create a comprehensive sales framework and customer interaction example using the **W.E.L.L. Framework™** (Wellness-focused consultative selling).
+
+**Required Framework Structure:**
 
 **W** - Welcome & Connect (30 seconds)
 - Build rapport around their wellness journey/current service choice
@@ -36,20 +38,28 @@ Generate a comprehensive sales script using the **W.E.L.L. Framework™** (Welln
 - Collaborative wellness planning
 - No pressure, just guided clarity toward better health
 
-**Script Requirements:**
+**Generate the following components:**
+
+1. **Framework Overview** - Explain the wellness-focused psychological approach for this customer profile
+2. **Complete Customer Interaction Example** - Full dialogue showing framework in action with realistic customer responses
+3. **Key Success Principles** - Why this works for health and wellness customers
+4. **Training Implementation Notes** - How to teach this to wellness service teams
+
+**Output Requirements:**
+- Maintain wellness-focused, caring approach
 - Focus on holistic health outcomes over transactions
 - Realistic dialogue that feels natural in wellness settings
 - Emphasize self-care and long-term wellness rather than quick fixes
 - Include questions that uncover emotional/lifestyle wellness drivers
 - Demonstrate genuine care for customer's health journey
-- Handle wellness objections through education rather than pressure
+- Show how to handle wellness objections through education rather than pressure
 - Use health-focused language ("preventive healthcare" not "product sales")
 - Connect to family/lifestyle impact - wellness affects relationships and life quality
 - Show professional understanding - acknowledge their life demands without judgment
 - Educational approach over persuasion - help them understand the wellness continuum
 - Progress from reactive → proactive → preventive approach
 
-Generate complete dialogue showing the framework in action. Only output the script dialogue - no explanations.`,
+Format the dialogue with clear section headers: **WELCOME & CONNECT**, **EXPLORE & DISCOVER**, **LINK & RECOMMEND**, **LISTEN & CLOSE SOFTLY**. Include both practitioner and customer dialogue to show natural conversation flow.`,
   
   guide: `You are a spa/salon business consultant. Create comprehensive product guides that help staff understand products thoroughly, including ingredients, benefits, usage instructions, and ideal customer profiles. Make it practical and easy to reference during client interactions.`,
   
@@ -222,31 +232,31 @@ export class OpenAIService {
     switch (type) {
       case 'script':
         if (idealClientProfiles && idealClientProfiles.length > 0) {
-          prompt += `Create a consultative sales script using the W.E.L.L. Framework™. Target the following ${idealClientProfiles.length} client profiles, incorporating their specific wellness challenges:\n\n`;
+          // Select the primary ICP for the script focus
+          const primaryICP = idealClientProfiles[0];
           
-          idealClientProfiles.forEach((icp, index) => {
-            prompt += `**ICP ${index + 1}: ${icp.title}** (${icp.preferredTone} tone):\n`;
-            prompt += `- Wellness Challenges: ${icp.painPoints.join(', ')}\n`;
-            prompt += `- Health/Wellness Goals: ${icp.motivations.join(', ')}\n`;
-            prompt += `- Lifestyle Context: ${icp.demographics.lifestyle}\n`;
-            prompt += `- Demographics: ${icp.demographics.ageRange}, ${icp.demographics.income}\n\n`;
-          });
+          prompt += `**Input Variables:**\n\n`;
+          prompt += `**Business Type:** ${businessType} business\n`;
+          prompt += `**ICP (Ideal Customer Profile):** ${primaryICP.title} - Demographics: ${primaryICP.demographics.ageRange}, ${primaryICP.demographics.income}, ${primaryICP.demographics.lifestyle}. `;
+          prompt += `Wellness Challenges: ${primaryICP.painPoints.join(', ')}. Health/Wellness Goals: ${primaryICP.motivations.join(', ')}\n`;
+          prompt += `**Core Service:** Current treatment/service being provided\n`;
+          prompt += `**Upsell/Cross-sell Options:** ${product.name} ($${product.price}) - ${product.description}\n`;
+          prompt += `**Wellness Context:** ${primaryICP.demographics.lifestyle} dealing with ${primaryICP.painPoints.slice(0,2).join(' and ')}\n`;
+          prompt += `**Service Environment:** Post-treatment consultation area\n\n`;
           
-          prompt += `**W.E.L.L. Framework Application:**\n\n`;
-          prompt += `**W - Welcome & Connect**: Reference their current service experience and show genuine interest in their wellness journey. Connect to their lifestyle and wellness motivations.\n\n`;
+          prompt += `**Customer Context for Dialogue:** Create a realistic scenario where a ${primaryICP.demographics.ageRange} ${primaryICP.title.toLowerCase()} has just completed their service and is in a consultation setting. `;
+          prompt += `They should naturally exhibit the pain points: ${primaryICP.painPoints.join(', ')}. `;
+          prompt += `Their responses should reflect someone who ${primaryICP.motivations.join(', ').toLowerCase()}.\n\n`;
           
-          prompt += `**E - Explore & Discover**: Use SPIN questioning:\n`;
-          prompt += `- **Situation Questions**: About their daily routine, current wellness practices, lifestyle factors\n`;
-          prompt += `- **Problem Questions**: About their specific wellness challenges listed above\n`;
-          prompt += `- **Implication Questions**: How these challenges impact their quality of life, relationships, work performance, long-term health\n\n`;
+          prompt += `**Important:** Generate a complete framework document that includes:\n`;
+          prompt += `1. Framework Overview paragraph\n`;
+          prompt += `2. Complete Customer Interaction Example with natural back-and-forth dialogue\n`;
+          prompt += `3. Key Success Principles (bullet points)\n`;
+          prompt += `4. Training Implementation Notes\n\n`;
           
-          prompt += `**L - Link & Recommend**: Connect their discoveries to this product as a wellness solution. Present maximum 2 options tied to their revealed wellness needs. Explain the logical connection between their wellness goals and your recommendations.\n\n`;
-          
-          prompt += `**L - Listen & Close Softly**: Use Need-Payoff Questions to help them visualize improved wellness outcomes. Focus on collaborative wellness planning with no pressure, just guided clarity toward better health.\n\n`;
-          
-          prompt += `Generate complete dialogue that addresses the SPECIFIC wellness challenges and goals listed above. Use health-focused language and connect to family/lifestyle impact. Progress from reactive → proactive → preventive wellness approach.`;
+          prompt += `The dialogue should show the practitioner using SPIN questioning techniques and the customer responding naturally based on their pain points and motivations. Include realistic objections and how to handle them through education rather than pressure.`;
         } else {
-          prompt += `Create a consultative sales script using the W.E.L.L. Framework™. Focus on holistic health outcomes and long-term wellness rather than quick product sales.`;
+          prompt += `Create a comprehensive W.E.L.L. Framework™ sales consultation for this ${businessType} business. Include framework overview, complete dialogue example, key principles, and training notes.`;
         }
         break;
       

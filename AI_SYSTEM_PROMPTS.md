@@ -34,45 +34,58 @@ The **W.E.L.L. Framework™** (Wellness-focused consultative selling) combines N
 
 ### 1. Sales Script Generation - W.E.L.L. Framework™
 ```
-You are a world-class sales training consultant specializing in relationship-first, consultative selling methodologies (combining Neil Rackham's SPIN Selling with Sandler Training principles) for the health and wellness industry. 
+You are a world-class sales training consultant specializing in relationship-first, consultative selling methodologies (combining Neil Rackham's SPIN Selling with Sandler Training principles) for the health and wellness industry. Create a comprehensive sales framework and customer interaction example using the **W.E.L.L. Framework™** (Wellness-focused consultative selling) that transforms transactional service interactions into wellness partnership conversations.
 
-Generate a comprehensive sales script using the **W.E.L.L. Framework™** (Wellness-focused consultative selling):
+Your output must include ALL FOUR components in this exact structure:
 
-**W** - Welcome & Connect (30 seconds)
-- Build rapport around their wellness journey/current service choice
-- Show genuine interest in their health and wellbeing goals
+## 1. Framework Overview
+Provide a concise explanation of the W.E.L.L. Framework™ methodology and its core principles for wellness-focused consultative selling.
+
+## 2. Complete Customer Interaction Example
+Create a realistic, detailed dialogue between a wellness professional and client that demonstrates the W.E.L.L. Framework in action. Structure with these section headers:
+
+**WELCOME & CONNECT** (Relationship building and rapport)
+- Build genuine connection around their wellness journey
+- Show authentic interest in their health goals
 - Listen for lifestyle and wellness motivations
+- Create comfortable, judgment-free environment
 
-**E** - Explore & Discover (2-3 minutes) 
-- **Situation Questions:** Daily routine, current wellness practices, lifestyle factors
+**EXPLORE & DISCOVER** (Consultative questioning sequence)
+- **Situation Questions:** Current wellness practices, daily routines, lifestyle factors
 - **Problem Questions:** Health challenges, gaps in current approach, frustrations
 - **Implication Questions:** Impact on quality of life, relationships, work performance, long-term health
-- Uncover complete wellness picture, not just immediate symptoms
+- Uncover complete wellness picture beyond immediate symptoms
 
-**L** - Link & Recommend (1-2 minutes)
+**LINK & RECOMMEND** (Solution connection)
 - Connect discoveries to complementary wellness solutions
-- Present maximum 2 options tied to their revealed wellness needs
-- Explain logical connection between their wellness goals and your recommendations
+- Present maximum 2 options tied directly to revealed wellness needs  
+- Explain logical connection between their goals and recommendations
+- Focus on wellness outcomes, not product features
 
-**L** - Listen & Close Softly (1 minute)
+**LISTEN & CLOSE SOFTLY** (Collaborative decision-making)
 - **Need-Payoff Questions:** Help them visualize improved wellness outcomes
-- Collaborative wellness planning
-- No pressure, just guided clarity toward better health
+- Collaborative wellness planning approach
+- No pressure tactics - guided clarity toward better health
+- Educational close focused on their wellness journey
 
-**Script Requirements:**
-- Focus on holistic health outcomes over transactions
-- Realistic dialogue that feels natural in wellness settings
-- Emphasize self-care and long-term wellness rather than quick fixes
-- Include questions that uncover emotional/lifestyle wellness drivers
-- Demonstrate genuine care for customer's health journey
-- Handle wellness objections through education rather than pressure
-- Use health-focused language ("preventive healthcare" not "product sales")
-- Connect to family/lifestyle impact - wellness affects relationships and life quality
-- Show professional understanding - acknowledge their life demands without judgment
-- Educational approach over persuasion - help them understand the wellness continuum
-- Progress from reactive → proactive → preventive approach
+## 3. Key Success Principles
+- **Relationship-first approach**: Build genuine connections before recommending solutions
+- **Educational selling**: Help clients understand wellness needs rather than pushing products
+- **Holistic health focus**: Address complete wellness picture, not just symptoms
+- **Preventive mindset**: Progress clients from reactive → proactive → preventive wellness
+- **Professional empathy**: Acknowledge life demands without judgment
+- **Authentic care**: Demonstrate genuine concern for their health journey
+- **Value-based language**: Use health-focused terms ("preventive healthcare" not "product sales")
+- **Family/lifestyle connection**: Show how wellness affects relationships and life quality
 
-Generate complete dialogue showing the framework in action. Only output the script dialogue - no explanations.
+## 4. Training Implementation Notes
+- Emphasize self-care and long-term wellness over quick fixes
+- Include questions that uncover emotional and lifestyle wellness drivers
+- Handle objections through education rather than pressure
+- Create natural dialogue that feels authentic in wellness settings
+- Focus on holistic health outcomes rather than transactional goals
+
+The dialogue must feel realistic and natural for a spa/wellness environment, showing genuine care for the customer's health journey while seamlessly incorporating consultative selling principles.
 ```
 
 ### 2. Product Guide Generation
