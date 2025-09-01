@@ -475,22 +475,28 @@ export default function MaterialViewerPage() {
                   </div>
                   
                   <div className="flex-1">
+                    {/* Product Name */}
+                    {material.product?.name && (
+                      <div className="mb-4">
+                        <h1 className="text-2xl font-bold text-primary-900 mb-1">{material.product.name}</h1>
+                        <p className="text-secondary-900/80 text-sm">
+                          Professional sales support materials created specifically for your {user?.businessType || 'wellness'} team
+                        </p>
+                      </div>
+                    )}
+                    
                     <div className="flex items-center gap-2 mb-2">
                       <span 
-                        className="text-sm font-medium capitalize px-2 py-1 rounded"
-                        style={{ 
-                          backgroundColor: `${TYPE_COLORS[material.type]}20`,
-                          color: TYPE_COLORS[material.type]
-                        }}
+                        className="text-sm font-medium capitalize px-3 py-1 rounded-lg bg-gradient-to-r from-primary-50 to-secondary-50 text-primary-900 border border-primary-200"
                       >
-                        {material.type.replace('-', ' ')}
+                        Sales Support {material.type.replace('-', ' ')}
                       </span>
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(material.status)}`}>
                         {material.status}
                       </span>
                     </div>
                     
-                    <h1 className="heading-2 mb-3">{material.title}</h1>
+                    <h2 className="text-xl font-semibold text-neutral-900 mb-3">{material.title}</h2>
                     
                     {material.description && (
                       <div 
@@ -594,34 +600,27 @@ export default function MaterialViewerPage() {
                 {/* ICP Tabs for Scripts */}
                 {material.type === 'script' && material.product?.idealClientProfiles && material.product.idealClientProfiles.length > 0 ? (
                   <div className="space-y-6">
-                    {/* Tab Navigation - Professional Spa-themed tabs */}
-                    <div className="flex flex-wrap gap-3 p-2 bg-white/70 backdrop-blur-sm rounded-2xl border border-sage-200/40 shadow-spa">
+                    {/* Tab Navigation - All 3 tabs on one line */}
+                    <div className="grid grid-cols-3 gap-2 p-2 bg-white/70 backdrop-blur-sm rounded-2xl border border-primary-200/40 shadow-spa">
                       {material.product.idealClientProfiles.map((icp, index) => (
                         <button
                           key={icp.id}
                           onClick={() => setActiveICPTab(icp.id)}
-                          className={`group relative px-6 py-3 text-sm font-semibold rounded-xl transition-all duration-300 transform hover:scale-[1.02] ${
+                          className={`group relative px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-300 transform hover:scale-[1.02] ${
                             activeICPTab === icp.id
-                              ? 'bg-gradient-to-br from-sage-400 to-sage-500 text-white shadow-spa-lg'
-                              : 'text-earth-600 hover:text-sage-700 hover:bg-sage-50/80'
+                              ? 'bg-gradient-to-br from-primary-500 to-secondary-500 text-white shadow-spa-lg'
+                              : 'text-neutral-900 hover:text-primary-900 hover:bg-primary-50/80'
                           }`}
                         >
-                          <div className="flex items-center gap-3">
-                            <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${
+                          <div className="flex flex-col items-center text-center">
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-colors mb-2 ${
                               activeICPTab === icp.id 
                                 ? 'bg-white/20 text-white' 
-                                : 'bg-sage-100 text-sage-600 group-hover:bg-sage-200'
+                                : 'bg-primary-100 text-primary-600 group-hover:bg-primary-200'
                             }`}>
                               {index + 1}
                             </div>
-                            <div className="text-left">
-                              <div className="font-semibold">{icp.title}</div>
-                              <div className={`text-xs ${
-                                activeICPTab === icp.id ? 'text-white/80' : 'text-earth-500'
-                              }`}>
-                                Client Profile {index + 1}
-                              </div>
-                            </div>
+                            <div className="font-semibold text-xs leading-tight">{icp.title}</div>
                           </div>
                         </button>
                       ))}
@@ -634,12 +633,52 @@ export default function MaterialViewerPage() {
                         .map((icp) => (
                           <div key={icp.id} className="p-8">
                             {/* ICP Header */}
-                            <div className="mb-6 pb-4 border-b border-sage-100">
-                              <h3 className="text-xl font-semibold text-earth-800 mb-2">
-                                {icp.title} Training Script
+                            <div className="mb-6 pb-4 border-b border-primary-200/40">
+                              <h3 className="text-xl font-semibold text-primary-900 mb-3">
+                                {icp.title} Sales Script
                               </h3>
-                              <p className="text-earth-600">
-                                Customized wellness consultation approach for this client profile
+                              
+                              {/* Pain Points and Motivators Section */}
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                {/* Top 2 Pain Points */}
+                                <div className="bg-gradient-to-br from-red-50 to-orange-50 p-4 rounded-xl border border-red-100">
+                                  <div className="flex items-center gap-2 mb-3">
+                                    <div className="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center">
+                                      <span className="text-red-600 text-sm">⚠</span>
+                                    </div>
+                                    <h4 className="font-semibold text-red-800 text-sm">Pain Points</h4>
+                                  </div>
+                                  <div className="space-y-2">
+                                    {(icp.painPoints || []).slice(0, 2).map((pain, idx) => (
+                                      <div key={idx} className="text-sm text-red-700 flex items-start gap-2">
+                                        <span className="text-red-400 mt-1">•</span>
+                                        <span>{pain}</span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+
+                                {/* Top 2 Motivations */}
+                                <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-4 rounded-xl border border-green-100">
+                                  <div className="flex items-center gap-2 mb-3">
+                                    <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                                      <Heart className="w-3 h-3 text-green-600" />
+                                    </div>
+                                    <h4 className="font-semibold text-green-800 text-sm">Motivations</h4>
+                                  </div>
+                                  <div className="space-y-2">
+                                    {(icp.motivations || []).slice(0, 2).map((motivation, idx) => (
+                                      <div key={idx} className="text-sm text-green-700 flex items-start gap-2">
+                                        <span className="text-green-400 mt-1">•</span>
+                                        <span>{motivation}</span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+
+                              <p className="text-secondary-900/80 text-sm">
+                                Customized sales approach tailored for this client profile
                               </p>
                             </div>
                             

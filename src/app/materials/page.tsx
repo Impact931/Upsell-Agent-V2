@@ -401,10 +401,10 @@ export default function MaterialsPage() {
                 </div>
                 <div>
                   <h1 className="font-display text-3xl font-semibold text-earth-800">
-                    Product Materials
+                    Sales Support Materials
                   </h1>
                   <p className="text-lg text-earth-600">
-                    Manage and access all your product training content
+                    Manage and access all your sales support content
                   </p>
                 </div>
               </div>
@@ -713,10 +713,9 @@ export default function MaterialsPage() {
                                   style={{ color: TYPE_COLORS[material.type] }}
                                 />
                                 <span 
-                                  className="text-sm font-medium capitalize"
-                                  style={{ color: TYPE_COLORS[material.type] }}
+                                  className="text-sm font-medium capitalize px-2 py-1 rounded-lg bg-gradient-to-r from-primary-50 to-secondary-50 text-primary-900 border border-primary-200"
                                 >
-                                  {material.type.replace('-', ' ')}
+                                  Sales Support {material.type.replace('-', ' ')}
                                 </span>
                               </div>
                               
@@ -731,10 +730,56 @@ export default function MaterialsPage() {
                               </button>
                             </div>
 
-                            <h3 className="font-display text-xl font-semibold text-earth-800 mb-2">{material.title}</h3>
-                            <p className="text-earth-600 mb-4">
+                            {/* Product Name */}
+                            {material.product?.name && (
+                              <div className="mb-2">
+                                <span className="text-lg font-bold text-primary-900">{material.product.name}</span>
+                              </div>
+                            )}
+
+                            <h3 className="font-display text-lg font-semibold text-earth-800 mb-2">{material.title}</h3>
+                            <p className="text-earth-600 mb-3">
                               {material.description}
                             </p>
+
+                            {/* ICP Pain Points and Motivators */}
+                            {material.product?.idealClientProfiles && material.product.idealClientProfiles.length > 0 && (
+                              <div className="mb-4">
+                                <h4 className="text-sm font-semibold text-neutral-900 mb-2">Client Profiles:</h4>
+                                <div className="space-y-2">
+                                  {material.product.idealClientProfiles.slice(0, 3).map((icp, index) => (
+                                    <div key={icp.id} className="bg-gradient-to-r from-neutral-50 to-primary-50/30 p-3 rounded-lg border border-primary-200/40">
+                                      <div className="flex items-center gap-2 mb-2">
+                                        <div className="w-5 h-5 bg-primary-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
+                                          {index + 1}
+                                        </div>
+                                        <span className="text-sm font-semibold text-primary-900">{icp.title}</span>
+                                      </div>
+                                      <div className="grid grid-cols-2 gap-2 text-xs">
+                                        <div>
+                                          <div className="text-red-600 font-medium mb-1">Top Pain Points:</div>
+                                          {(icp.painPoints || []).slice(0, 2).map((pain, idx) => (
+                                            <div key={idx} className="text-red-700 flex items-start gap-1">
+                                              <span className="text-red-400 mt-0.5">•</span>
+                                              <span className="line-clamp-1">{pain}</span>
+                                            </div>
+                                          ))}
+                                        </div>
+                                        <div>
+                                          <div className="text-green-600 font-medium mb-1">Motivations:</div>
+                                          {(icp.motivations || []).slice(0, 2).map((motivation, idx) => (
+                                            <div key={idx} className="text-green-700 flex items-start gap-1">
+                                              <span className="text-green-400 mt-0.5">•</span>
+                                              <span className="line-clamp-1">{motivation}</span>
+                                            </div>
+                                          ))}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
 
                             {/* Meta info */}
                             <div className="flex flex-wrap items-center gap-3 text-xs mb-4 text-earth-500">
@@ -806,7 +851,12 @@ export default function MaterialsPage() {
                                   className="w-5 h-5" 
                                   style={{ color: TYPE_COLORS[material.type] }}
                                 />
-                                <h3 className="font-display text-lg font-semibold text-earth-800">{material.title}</h3>
+                                <div className="flex items-center gap-3">
+                                  {material.product?.name && (
+                                    <span className="text-lg font-bold text-primary-900">{material.product.name} - </span>
+                                  )}
+                                  <h3 className="font-display text-lg font-semibold text-earth-800">{material.title}</h3>
+                                </div>
                                 <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(material.status)}`}>
                                   {material.status}
                                 </span>
@@ -817,7 +867,7 @@ export default function MaterialsPage() {
                               </p>
 
                               <div className="flex items-center gap-4 text-xs text-earth-500">
-                                <span className="bg-sage-50 px-2 py-1 rounded">{material.type.replace('-', ' ')}</span>
+                                <span className="bg-gradient-to-r from-primary-50 to-secondary-50 text-primary-900 border border-primary-200 px-2 py-1 rounded">Sales Support {material.type.replace('-', ' ')}</span>
                                 <span className="bg-sage-50 px-2 py-1 rounded">{material.category}</span>
                                 <span>{material.duration} min</span>
                                 <span>{material.views} views</span>
