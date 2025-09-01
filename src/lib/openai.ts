@@ -222,14 +222,25 @@ export class OpenAIService {
     switch (type) {
       case 'script':
         if (idealClientProfiles && idealClientProfiles.length > 0) {
-          prompt += `Create a comprehensive sales script that can be adapted for different client types. Include:\n`;
-          prompt += `- Opening lines that resonate with each ICP\n`;
-          prompt += `- Benefit highlights that address specific pain points\n`;
-          prompt += `- Price presentation techniques for different income levels\n`;
-          prompt += `- Closing techniques that match each ICP's decision-making style\n`;
-          prompt += `Make it natural and consultative, with specific approaches for each customer persona.`;
+          prompt += `Create a natural, rapport-driven sales script following the 6-step structure. For EACH of the ${idealClientProfiles.length} client profiles below, incorporate their specific pain points into the conversation flow:\n\n`;
+          
+          idealClientProfiles.forEach((icp, index) => {
+            prompt += `**${icp.title}** (${icp.preferredTone} tone):\n`;
+            prompt += `- Pain Points to Address: ${icp.painPoints.join(', ')}\n`;
+            prompt += `- Motivations to Appeal To: ${icp.motivations.join(', ')}\n`;
+            prompt += `- Demographics: ${icp.demographics.ageRange}, ${icp.demographics.income}, ${icp.demographics.lifestyle}\n\n`;
+          });
+          
+          prompt += `Generate a script that includes:\n`;
+          prompt += `1. **Rapport-Based Opening**: Reference observations that connect to their specific pain points\n`;
+          prompt += `2. **Identify Relevance**: Explicitly connect their pain points to how this product helps\n`;
+          prompt += `3. **Recommend Product**: Focus on how it FEELS to have their specific problems solved\n`;
+          prompt += `4. **Social Proof**: Mention others with similar pain points who benefited\n`;
+          prompt += `5. **Natural Closing Options**: Offer ways to try/experience the solution to their pain points\n`;
+          prompt += `6. **Fallback**: Supportive response that keeps door open\n\n`;
+          prompt += `Make the script address the ACTUAL pain points listed above, not generic concerns.`;
         } else {
-          prompt += `Create a natural, conversational sales script that staff can use to introduce and upsell this product. Include opening lines, benefit highlights, price presentation, and closing techniques. Make it sound natural and consultative, not pushy.`;
+          prompt += `Create a natural, conversational sales script that staff can use to introduce and upsell this product. Follow the 6-step rapport-driven structure, focusing on how the product solves specific customer problems.`;
         }
         break;
       
@@ -401,44 +412,55 @@ Return only valid JSON:`;
   // Generate Ideal Client Profiles (ICPs) based on product information
   async generateIdealClientProfiles(productText: string, product?: Partial<Product>): Promise<IdealClientProfile[]> {
     try {
-      const prompt = `Based on the following product information, generate 3 unique Ideal Client Profiles (ICPs) for potential customers who would benefit from this product.
+      const prompt = `STEP 1: PRODUCT ANALYSIS
+Analyze this product information to identify the SPECIFIC problems it solves:
 
 Product Information:
 ${productText}
 
 ${product ? `
 Product Name: ${product.name || 'Unknown'}
-Price: $${product.price || 'Not specified'}
+Price: $${product.price || 'Not specified'}  
 Category: ${product.category || 'General'}
 Benefits: ${product.benefits ? product.benefits.join(', ') : 'Various benefits'}
 ` : ''}
 
-For each ICP, provide detailed information in JSON format with the following structure:
-{
-  "title": "Descriptive persona name (e.g., 'Busy Professional Mom')",
-  "demographics": {
-    "ageRange": "age range",
-    "income": "income level",
-    "lifestyle": "lifestyle description",
-    "location": "location type (optional)",
-    "occupation": "occupation type (optional)"
-  },
-  "painPoints": ["pain point 1", "pain point 2", "pain point 3"],
-  "motivations": ["motivation 1", "motivation 2", "motivation 3"],
-  "preferredTone": "professional|casual|consultative"
-}
+STEP 2: PAIN POINT IDENTIFICATION
+From the product details above, identify:
+- What physical problems does this product address? (e.g., dry skin, muscle tension, hair damage)
+- What emotional challenges does it solve? (e.g., stress, low confidence, feeling overwhelmed)
+- What lifestyle obstacles does it overcome? (e.g., lack of time, difficulty with routines)
+- What functional needs does it meet? (e.g., convenience, effectiveness, safety)
 
-Generate exactly 3 distinct ICPs that represent different customer segments. Make them realistic, specific, and actionable for sales training.
+STEP 3: ICP CREATION
+Now create 3 distinct customer profiles who would experience these SPECIFIC pain points. Each ICP must have pain points that directly relate to what this product actually solves.
 
-CRITICAL FORMATTING REQUIREMENTS:
-- Return ONLY a valid JSON array with no markdown formatting
-- Use proper double quotes for all strings
-- Do not include line breaks within string values
-- Ensure all objects are properly comma-separated
-- Include all required fields for each ICP
+Return ONLY a valid JSON array with this exact structure:
+[
+  {
+    "title": "Specific persona name based on who has these pain points",
+    "demographics": {
+      "ageRange": "age range of people with these specific problems",
+      "income": "income level that matches product price point", 
+      "lifestyle": "lifestyle that creates or experiences these pain points",
+      "location": "urban|suburban|rural|mixed",
+      "occupation": "job type that contributes to these pain points"
+    },
+    "painPoints": [
+      "Specific problem #1 this product directly addresses",
+      "Specific problem #2 this product directly addresses", 
+      "Specific problem #3 this product directly addresses"
+    ],
+    "motivations": [
+      "Specific desire to solve pain point #1",
+      "Specific desire to solve pain point #2",
+      "Specific desire to solve pain point #3"
+    ],
+    "preferredTone": "professional|casual|consultative"
+  }
+]
 
-Return as a clean JSON array like this format:
-[{"title": "Name", "demographics": {...}, "painPoints": [...], "motivations": [...], "preferredTone": "professional"}]`;
+CRITICAL: The pain points must be SPECIFIC problems this exact product solves, not generic wellness concerns. The motivations must be specific desires to overcome those exact pain points.`;
 
       const completion = await openai.chat.completions.create({
         model: process.env.OPENAI_MODEL || 'gpt-4-turbo-preview',

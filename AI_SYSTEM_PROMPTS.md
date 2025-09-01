@@ -157,9 +157,10 @@ Format as clear, actionable responses staff can use immediately. Include the exa
 
 ## Ideal Client Profile (ICP) Generation
 
-### ICP Generation Prompt
+### Enhanced ICP Generation Prompt
 ```
-Based on the following product information, generate 3 unique Ideal Client Profiles (ICPs) for potential customers who would benefit from this product.
+STEP 1: PRODUCT ANALYSIS
+Analyze this product information to identify the SPECIFIC problems it solves:
 
 Product Information:
 {productText}
@@ -169,32 +170,42 @@ Price: ${product.price}
 Category: {product.category}
 Benefits: {product.benefits}
 
-For each ICP, provide detailed information in JSON format with the following structure:
-{
-  "title": "Descriptive persona name (e.g., 'Busy Professional Mom')",
-  "demographics": {
-    "ageRange": "age range",
-    "income": "income level",
-    "lifestyle": "lifestyle description",
-    "location": "location type (optional)",
-    "occupation": "occupation type (optional)"
-  },
-  "painPoints": ["pain point 1", "pain point 2", "pain point 3"],
-  "motivations": ["motivation 1", "motivation 2", "motivation 3"],
-  "preferredTone": "professional|casual|consultative"
-}
+STEP 2: PAIN POINT IDENTIFICATION
+From the product details above, identify:
+- What physical problems does this product address? (e.g., dry skin, muscle tension, hair damage)
+- What emotional challenges does it solve? (e.g., stress, low confidence, feeling overwhelmed)
+- What lifestyle obstacles does it overcome? (e.g., lack of time, difficulty with routines)
+- What functional needs does it meet? (e.g., convenience, effectiveness, safety)
 
-Generate exactly 3 distinct ICPs that represent different customer segments. Make them realistic, specific, and actionable for sales training.
+STEP 3: ICP CREATION
+Now create 3 distinct customer profiles who would experience these SPECIFIC pain points. Each ICP must have pain points that directly relate to what this product actually solves.
 
-CRITICAL FORMATTING REQUIREMENTS:
-- Return ONLY a valid JSON array with no markdown formatting
-- Use proper double quotes for all strings
-- Do not include line breaks within string values
-- Ensure all objects are properly comma-separated
-- Include all required fields for each ICP
+Return ONLY a valid JSON array with this exact structure:
+[
+  {
+    "title": "Specific persona name based on who has these pain points",
+    "demographics": {
+      "ageRange": "age range of people with these specific problems",
+      "income": "income level that matches product price point", 
+      "lifestyle": "lifestyle that creates or experiences these pain points",
+      "location": "urban|suburban|rural|mixed",
+      "occupation": "job type that contributes to these pain points"
+    },
+    "painPoints": [
+      "Specific problem #1 this product directly addresses",
+      "Specific problem #2 this product directly addresses", 
+      "Specific problem #3 this product directly addresses"
+    ],
+    "motivations": [
+      "Specific desire to solve pain point #1",
+      "Specific desire to solve pain point #2",
+      "Specific desire to solve pain point #3"
+    ],
+    "preferredTone": "professional|casual|consultative"
+  }
+]
 
-Return as a clean JSON array like this format:
-[{"title": "Name", "demographics": {...}, "painPoints": [...], "motivations": [...], "preferredTone": "professional"}]
+CRITICAL: The pain points must be SPECIFIC problems this exact product solves, not generic wellness concerns. The motivations must be specific desires to overcome those exact pain points.
 ```
 
 ### ICP System Prompt
