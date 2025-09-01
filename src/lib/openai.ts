@@ -11,45 +11,45 @@ const openai = new OpenAI({
 });
 
 const SYSTEM_PROMPTS = {
-  script: `You are an expert conversational script writer for spa, salon, and wellness professionals. Your goal is to generate a highly natural, rapport-driven, and emotionally intelligent upsell script that helps service providers confidently recommend add-on products or services to clients during appointments.
+  script: `You are a world-class sales training consultant specializing in relationship-first, consultative selling methodologies (combining Neil Rackham's SPIN Selling with Sandler Training principles) for the health and wellness industry. 
 
-You must write in a tone that is warm, respectful, and never pushy. The script should sound like a friendly, personalized recommendation—not a sales pitch. Your job is to make the client feel seen, supported, and curious—not sold to.
+Generate a comprehensive sales script using the **W.E.L.L. Framework™** (Wellness-focused consultative selling):
 
-Your script must follow this structure:
+**W** - Welcome & Connect (30 seconds)
+- Build rapport around their wellness journey/current service choice
+- Show genuine interest in their health and wellbeing goals
+- Listen for lifestyle and wellness motivations
 
-1. **Rapport-Based Opening**
-   - Start with a friendly question or observation that shows you're paying attention.
-   - Reference how the client is feeling, what you noticed, or what they shared.
+**E** - Explore & Discover (2-3 minutes) 
+- **Situation Questions:** Daily routine, current wellness practices, lifestyle factors
+- **Problem Questions:** Health challenges, gaps in current approach, frustrations
+- **Implication Questions:** Impact on quality of life, relationships, work performance, long-term health
+- Uncover complete wellness picture, not just immediate symptoms
 
-2. **Identify Relevance**
-   - Reference the client's pain point or desired outcome.
-   - Show that the product/service is aligned with their needs, not randomly suggested.
+**L** - Link & Recommend (1-2 minutes)
+- Connect discoveries to complementary wellness solutions
+- Present maximum 2 options tied to their revealed wellness needs
+- Explain logical connection between their wellness goals and your recommendations
 
-3. **Recommend the Product or Service**
-   - Use emotional and functional language (how it *feels*, what it *helps with*).
-   - Avoid technical features. Focus on experience, relief, and transformation.
-   - Use natural language like "You might really enjoy this because…" or "One thing that helps a lot is…"
+**L** - Listen & Close Softly (1 minute)
+- **Need-Payoff Questions:** Help them visualize improved wellness outcomes
+- Collaborative wellness planning
+- No pressure, just guided clarity toward better health
 
-4. **Subtle Social Proof or Authority (Optional)**
-   - If applicable, mention a relevant and believable form of social proof, popularity, or authority.
-   - Be brief and authentic. Do not fabricate demand.
+**Script Requirements:**
+- Focus on holistic health outcomes over transactions
+- Realistic dialogue that feels natural in wellness settings
+- Emphasize self-care and long-term wellness rather than quick fixes
+- Include questions that uncover emotional/lifestyle wellness drivers
+- Demonstrate genuine care for customer's health journey
+- Handle wellness objections through education rather than pressure
+- Use health-focused language ("preventive healthcare" not "product sales")
+- Connect to family/lifestyle impact - wellness affects relationships and life quality
+- Show professional understanding - acknowledge their life demands without judgment
+- Educational approach over persuasion - help them understand the wellness continuum
+- Progress from reactive → proactive → preventive approach
 
-5. **Offer 2–3 Natural Closing Options**
-   - Present the next steps in a way that respects different decision styles.
-   - Include a mix of try-it-now, take-home, or show-you-first options.
-   - Keep all options low-pressure and friendly.
-
-6. **Fallback Line (If They Decline)**
-   - End with a non-pushy response that leaves the door open for the future.
-   - Reaffirm support and care.
-
-**Tone & Style Requirements:**
-- Avoid any hard-sell language: no "you should," "you need," "buy now," etc.
-- Use conversational, client-centered language: "you might enjoy…", "a lot of clients say…", "if you're curious…"
-- Keep everything brief, natural, and adapted to the service setting.
-- Match the overall wellness experience—calm, thoughtful, and aligned with client care.
-
-Only generate the script. Do not explain what you're doing.`,
+Generate complete dialogue showing the framework in action. Only output the script dialogue - no explanations.`,
   
   guide: `You are a spa/salon business consultant. Create comprehensive product guides that help staff understand products thoroughly, including ingredients, benefits, usage instructions, and ideal customer profiles. Make it practical and easy to reference during client interactions.`,
   
@@ -222,25 +222,31 @@ export class OpenAIService {
     switch (type) {
       case 'script':
         if (idealClientProfiles && idealClientProfiles.length > 0) {
-          prompt += `Create a natural, rapport-driven sales script following the 6-step structure. For EACH of the ${idealClientProfiles.length} client profiles below, incorporate their specific pain points into the conversation flow:\n\n`;
+          prompt += `Create a consultative sales script using the W.E.L.L. Framework™. Target the following ${idealClientProfiles.length} client profiles, incorporating their specific wellness challenges:\n\n`;
           
           idealClientProfiles.forEach((icp, index) => {
-            prompt += `**${icp.title}** (${icp.preferredTone} tone):\n`;
-            prompt += `- Pain Points to Address: ${icp.painPoints.join(', ')}\n`;
-            prompt += `- Motivations to Appeal To: ${icp.motivations.join(', ')}\n`;
-            prompt += `- Demographics: ${icp.demographics.ageRange}, ${icp.demographics.income}, ${icp.demographics.lifestyle}\n\n`;
+            prompt += `**ICP ${index + 1}: ${icp.title}** (${icp.preferredTone} tone):\n`;
+            prompt += `- Wellness Challenges: ${icp.painPoints.join(', ')}\n`;
+            prompt += `- Health/Wellness Goals: ${icp.motivations.join(', ')}\n`;
+            prompt += `- Lifestyle Context: ${icp.demographics.lifestyle}\n`;
+            prompt += `- Demographics: ${icp.demographics.ageRange}, ${icp.demographics.income}\n\n`;
           });
           
-          prompt += `Generate a script that includes:\n`;
-          prompt += `1. **Rapport-Based Opening**: Reference observations that connect to their specific pain points\n`;
-          prompt += `2. **Identify Relevance**: Explicitly connect their pain points to how this product helps\n`;
-          prompt += `3. **Recommend Product**: Focus on how it FEELS to have their specific problems solved\n`;
-          prompt += `4. **Social Proof**: Mention others with similar pain points who benefited\n`;
-          prompt += `5. **Natural Closing Options**: Offer ways to try/experience the solution to their pain points\n`;
-          prompt += `6. **Fallback**: Supportive response that keeps door open\n\n`;
-          prompt += `Make the script address the ACTUAL pain points listed above, not generic concerns.`;
+          prompt += `**W.E.L.L. Framework Application:**\n\n`;
+          prompt += `**W - Welcome & Connect**: Reference their current service experience and show genuine interest in their wellness journey. Connect to their lifestyle and wellness motivations.\n\n`;
+          
+          prompt += `**E - Explore & Discover**: Use SPIN questioning:\n`;
+          prompt += `- **Situation Questions**: About their daily routine, current wellness practices, lifestyle factors\n`;
+          prompt += `- **Problem Questions**: About their specific wellness challenges listed above\n`;
+          prompt += `- **Implication Questions**: How these challenges impact their quality of life, relationships, work performance, long-term health\n\n`;
+          
+          prompt += `**L - Link & Recommend**: Connect their discoveries to this product as a wellness solution. Present maximum 2 options tied to their revealed wellness needs. Explain the logical connection between their wellness goals and your recommendations.\n\n`;
+          
+          prompt += `**L - Listen & Close Softly**: Use Need-Payoff Questions to help them visualize improved wellness outcomes. Focus on collaborative wellness planning with no pressure, just guided clarity toward better health.\n\n`;
+          
+          prompt += `Generate complete dialogue that addresses the SPECIFIC wellness challenges and goals listed above. Use health-focused language and connect to family/lifestyle impact. Progress from reactive → proactive → preventive wellness approach.`;
         } else {
-          prompt += `Create a natural, conversational sales script that staff can use to introduce and upsell this product. Follow the 6-step rapport-driven structure, focusing on how the product solves specific customer problems.`;
+          prompt += `Create a consultative sales script using the W.E.L.L. Framework™. Focus on holistic health outcomes and long-term wellness rather than quick product sales.`;
         }
         break;
       
