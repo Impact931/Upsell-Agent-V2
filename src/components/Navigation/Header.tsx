@@ -22,6 +22,7 @@ import {
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui';
 import { clsx } from 'clsx';
+import { useNotifications } from '@/hooks/useNotifications';
 
 const navigationItems = [
   {
@@ -56,28 +57,9 @@ export function Header() {
   const { user, logout } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
-
-  // Mock notifications for now - in a real app, these would come from an API
-  const notifications = [
-    {
-      id: '1',
-      title: 'Product Materials Ready',
-      message: 'Hydrating Face Serum sales scripts are now ready for distribution',
-      type: 'completed',
-      timestamp: '2 minutes ago',
-      isRead: false
-    },
-    {
-      id: '2',
-      title: 'Processing Complete',
-      message: 'Massage Package Upsell materials generated successfully',
-      type: 'completed',
-      timestamp: '1 hour ago',
-      isRead: false
-    }
-  ];
-
-  const unreadCount = notifications.filter(n => !n.isRead).length;
+  
+  // Get real notifications
+  const { notifications, unreadCount, isLoading: notificationsLoading } = useNotifications();
 
   // Close dropdowns when clicking outside
   useEffect(() => {

@@ -662,8 +662,8 @@ CRITICAL: The pain points must be SPECIFIC problems this exact product solves, n
                         income: 'Various',
                         lifestyle: 'Wellness-focused'
                       },
-                      painPoints: ['Product concerns', 'Value questions', 'Trust issues'],
-                      motivations: ['Health improvement', 'Self-care', 'Quality products'],
+                      painPoints: ['Looking for effective wellness solutions', 'Seeking products that deliver results', 'Want value for their wellness investment'],
+                      motivations: ['Achieve specific wellness goals', 'Experience quality treatments', 'Invest in long-term health and beauty'],
                       preferredTone: 'professional' as const,
                       generatedAt: new Date(),
                       createdAt: new Date(),

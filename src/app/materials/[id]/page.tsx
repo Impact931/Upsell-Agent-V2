@@ -478,7 +478,14 @@ export default function MaterialViewerPage() {
                     {/* Product Name */}
                     {material.product?.name && (
                       <div className="mb-4">
-                        <h1 className="text-2xl font-bold text-primary-900 mb-1">{material.product.name}</h1>
+                        <div className="flex items-center gap-3 mb-1">
+                          <h1 className="text-2xl font-bold text-primary-900">{material.product.name}</h1>
+                          {material.product?.price && (
+                            <span className="px-3 py-1 bg-gradient-to-r from-green-100 to-emerald-100 text-green-800 rounded-full text-sm font-semibold border border-green-200">
+                              ${material.product.price}
+                            </span>
+                          )}
+                        </div>
                         <p className="text-secondary-900/80 text-sm">
                           Professional sales support materials created specifically for your {user?.businessType || 'wellness'} team
                         </p>

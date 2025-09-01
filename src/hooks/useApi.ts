@@ -151,11 +151,16 @@ export function useTrainingApi() {
     });
   }, [api]);
 
-  const deleteTrainingMaterial = useCallback((id: string) => {
-    return api.delete(`deleteTraining-${id}`, `/api/training/${id}`, {
-      showSuccessToast: true,
-      successMessage: 'Training material deleted successfully!',
-    });
+  const deleteTrainingMaterial = useCallback(async (id: string) => {
+    try {
+      const result = await api.delete(`/api/training/${id}`);
+      // Show success toast manually since the delete method doesn't support options
+      toast.success('Training material deleted successfully!');
+      return result;
+    } catch (error) {
+      toast.error('Failed to delete training material');
+      throw error;
+    }
   }, [api]);
 
   return {
