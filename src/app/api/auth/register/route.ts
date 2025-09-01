@@ -13,14 +13,6 @@ async function registerHandler(request: NextRequest) {
     RegisterSchema
   );
 
-  // Validate password strength
-  const passwordValidation = authService.validatePassword(password);
-  if (!passwordValidation.isValid) {
-    throw new ValidationError('Password does not meet requirements', {
-      issues: passwordValidation.issues,
-    });
-  }
-
   // Check if user already exists
   const existingUser = await prisma.user.findUnique({
     where: { email: email.toLowerCase() },
@@ -39,8 +31,8 @@ async function registerHandler(request: NextRequest) {
       email: email.toLowerCase(),
       password: hashedPassword,
       businessName,
-      businessType: businessType.toUpperCase(),
-      role: role.toUpperCase(),
+      businessType,
+      role,
     },
     select: {
       id: true,
@@ -56,7 +48,7 @@ async function registerHandler(request: NextRequest) {
   const token = authService.generateToken({
     id: user.id,
     email: user.email,
-    role: user.role.toLowerCase() as 'manager' | 'staff',
+    role: user.role as 'manager' | 'staff',
   });
 
   return NextResponse.json({
@@ -64,8 +56,8 @@ async function registerHandler(request: NextRequest) {
     token,
     user: {
       ...user,
-      businessType: user.businessType.toLowerCase() as 'spa' | 'salon' | 'wellness',
-      role: user.role.toLowerCase() as 'manager' | 'staff',
+      businessType: user.businessType as 'spa' | 'salon' | 'wellness',
+      role: user.role as 'manager' | 'staff',
     },
     expiresIn: '7d',
   }, { status: 201 });

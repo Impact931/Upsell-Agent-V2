@@ -17,7 +17,7 @@ const registerSchema = z.object({
   password: z
     .string()
     .min(8, 'Password must be at least 8 characters')
-    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, 'Password must contain uppercase, lowercase and number'),
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])/, 'Password must contain uppercase, lowercase, number and special character'),
   confirmPassword: z.string().min(1, 'Please confirm your password'),
   businessName: z
     .string()
@@ -273,7 +273,7 @@ export default function RegisterPage() {
                 )}
                 <p className="text-xs text-earth-500 mt-1 flex items-center gap-1">
                   <span className="w-3 h-3">🔒</span>
-                  At least 8 characters with uppercase, lowercase & numbers
+                  At least 8 characters with uppercase, lowercase, number & special character
                 </p>
               </div>
 
